@@ -11,7 +11,7 @@ public class LoopyDiceTest {
         LoopyDice testGame = new LoopyDice();
         LoopyDicePlayer adam = new LoopyDicePlayer("Adam");
         LoopyDicePlayer op = new LoopyDicePlayer("Opponent");
-        testGame.setPlayer(adam);
+        testGame.setCurrentPlayer(adam);
         testGame.setOpponent(op);
         testGame.setPlayerScore(0);
         testGame.setOpponentScore(5);
@@ -24,7 +24,7 @@ public class LoopyDiceTest {
         LoopyDice testGame = new LoopyDice();
         LoopyDicePlayer adam = new LoopyDicePlayer("Adam");
         LoopyDicePlayer op = new LoopyDicePlayer("Opponent");
-        testGame.setPlayer(adam);
+        testGame.setCurrentPlayer(adam);
         testGame.setOpponent(op);
         testGame.setPlayerScore(3);
         testGame.setOpponentScore(3);
@@ -43,7 +43,7 @@ public class LoopyDiceTest {
         op.addDice(3);
         adam.setSeed(58l);
         op.setSeed(33l);
-        testGame.setPlayer(adam);
+        testGame.setCurrentPlayer(adam);
         testGame.setOpponent(op);
         Assert.assertEquals(LoopyDice.RoundResult.OPPONENT_DICE_UP, testGame.runRound());
     }

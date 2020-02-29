@@ -2,6 +2,7 @@ package io.zipcoder.casino.games.specific;
 
 import io.zipcoder.casino.games.DiceGame;
 import io.zipcoder.casino.games.Game;
+import io.zipcoder.casino.models.Dice;
 import io.zipcoder.casino.players.DicePlayer;
 import io.zipcoder.casino.utilities.MenuStrings;
 import io.zipcoder.casino.utilities.io.ConsoleServices;
@@ -9,14 +10,9 @@ import io.zipcoder.casino.utilities.persistence.StatTracker;
 
 import java.util.Random;
 
-public class Craps implements Game<DicePlayer>, DiceGame {
+public class Craps extends Game<DicePlayer, DicePlayer> implements DiceGame {
 
-    private DicePlayer currentPlayer;
-
-    public Craps() {
-
-    }
-
+    public Craps() {}
 
     @Override
     public void runGame(DicePlayer player) {

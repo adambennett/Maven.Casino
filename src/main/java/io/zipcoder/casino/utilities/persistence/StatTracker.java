@@ -30,6 +30,17 @@ public class StatTracker {
         totalCashSpent = 0;
     }
 
+    public static void clearAllStats() {
+        blackJackWins = 0;
+        goFishWins = 0;
+        loopyWins = 0;
+        crapsWins = 0;
+        highestChipValue = 0;
+        overallLosses = 0;
+        totalLifetimeChipWinnings = 0;
+        totalCashSpent = 0;
+    }
+
     public static void finishGame(Game game, boolean win) {
         if (win) {
             if (game instanceof BlackJack) {
@@ -46,26 +57,9 @@ public class StatTracker {
         }
     }
 
-    public static void updateHighestChipValue(ArrayList<Chip> currentChips) {
-        int dollarVal = 0;
-        for (Chip c : currentChips) {
-            c.getDollarVal();
-        }
-
-        if (dollarVal > highestChipValue) {
-            highestChipValue = dollarVal;
-        }
-    }
-
     public static void updateCashSpent(int spent) {
         totalCashSpent+=spent;
+        if (totalCashSpent<0) { totalCashSpent = 0; }
     }
 
-    public static void winChips(ArrayList<Chip> currentChips) {
-        int dollarVal = 0;
-        for (Chip c : currentChips) {
-            c.getDollarVal();
-        }
-        totalLifetimeChipWinnings+=dollarVal;
-    }
 }

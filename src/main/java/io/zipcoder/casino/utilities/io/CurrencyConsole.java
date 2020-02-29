@@ -1,6 +1,7 @@
 package io.zipcoder.casino.utilities.io;
 
 import io.zipcoder.casino.App;
+import io.zipcoder.casino.utilities.persistence.StatTracker;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,9 @@ public class CurrencyConsole extends AbstractConsole {
                 return;
             case CASHOUT:
                 if (App.isLoggedIn()) {
-                    App.getCurrentPlayer().getWallet().subDollar(App.getCurrentPlayer().getWallet().getDollars());
+                    int money = App.getCurrentPlayer().getWallet().getDollars();
+                    App.getCurrentPlayer().getWallet().subDollar(money);
+                    StatTracker.updateCashSpent(-money);
                 }
                 printPrompt(PromptMessage.CURRENCY_MENU, true);
                 return;
@@ -39,6 +42,7 @@ public class CurrencyConsole extends AbstractConsole {
                 try {
                     Integer amt = Integer.parseInt(input);
                     App.getCurrentPlayer().getWallet().addDollar(amt);
+                    StatTracker.updateCashSpent(amt);
                 } catch (NumberFormatException ex) {
                     ConsoleServices.print("Not a number, no deposit occured.");
                 }

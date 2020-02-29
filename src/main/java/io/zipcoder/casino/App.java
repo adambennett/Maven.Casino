@@ -19,16 +19,15 @@ public class App {
     }
 
     public void initialize() {
-        casino = new Casino();
+        runCasino();
         StatTracker st = new StatTracker();
         SaveLoadServices.loadJSONData(SaveLoadServices.SAVE_FILE_NAME);
         LoginConsole login = new LoginConsole();
         login.printPrompt(AbstractConsole.PromptMessage.WELCOME, true);
     }
 
-
-    public static void updatePlayer(Game currentGame) {
-        casino.updateCurrentPlayer(currentGame);
+    public void runCasino() {
+        casino = new Casino();
     }
 
     public static Casino getCasino() {

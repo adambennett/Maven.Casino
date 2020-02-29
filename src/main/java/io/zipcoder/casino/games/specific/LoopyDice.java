@@ -13,14 +13,12 @@ import io.zipcoder.casino.utilities.persistence.StatTracker;
 
 import java.io.Console;
 
-public class LoopyDice implements Game<LoopyDicePlayer>, DiceGame {
+public class LoopyDice extends Game<LoopyDicePlayer, LoopyDicePlayer> implements DiceGame {
 
     private int playerScore = 0;
     private int opponentScore = 0;
     private int par = 3;
     private int round = 1;
-    private LoopyDicePlayer player;
-    private LoopyDicePlayer opponent;
 
     public LoopyDice() {
         this(3);
@@ -34,10 +32,10 @@ public class LoopyDice implements Game<LoopyDicePlayer>, DiceGame {
     public void runGame(LoopyDicePlayer player) {
         ConsoleServices.print(MenuStrings.asciiDice);
         ConsoleServices.print("Let's get Loopy!");
-        this.player = player;
-        this.opponent = new LoopyDicePlayer("Looper");
-        this.player.addDice(3);
-        this.opponent.addDice(3);
+        this.setCurrentPlayer(player);
+        this.setOpponent(new LoopyDicePlayer("Looper"));
+        this.getCurrentPlayer().addDice(3);
+        this.getOpponent().addDice(3);
 
         ConsoleServices.print("Each player has 3 dice. Enter 'Roll' to calculate the next turn, or enter 'AutoRoll' to simulate the entire game.");
         while (!gameOver()) {
@@ -89,14 +87,14 @@ public class LoopyDice implements Game<LoopyDicePlayer>, DiceGame {
 
 
     public RoundResult runRound() {
-        int playerSum = player.rollDice();
-        int oppSum = opponent.rollDice();
-        int playerBustVal = 15 + (2 * (player.getNumDice() - 3));
-        int oppBustVal = 15 + (2 * (opponent.getNumDice() - 3));
+        int playerSum = this.getCurrentPlayer().rollDice();
+        int oppSum = this.getOpponent().rollDice();
+        int playerBustVal = 15 + (2 * (this.getCurrentPlayer().getNumDice() - 3));
+        int oppBustVal = 15 + (2 * (this.getOpponent().getNumDice() - 3));
         if (playerSum > playerBustVal || oppSum > oppBustVal) {
             if (playerSum > playerBustVal) {
-                player.emptyDice();
-                player.addDice(3);
+                this.getCurrentPlayer().emptyDice();
+                this.getCurrentPlayer().addDice(3);
                 this.playerScore++;
                 int neededToLose = this.par - this.playerScore;
                 if (neededToLose < 1) {
@@ -107,8 +105,8 @@ public class LoopyDice implements Game<LoopyDicePlayer>, DiceGame {
             }
 
             if (oppSum > oppBustVal) {
-                opponent.emptyDice();
-                opponent.addDice(3);
+                this.getOpponent().emptyDice();
+                this.getOpponent().addDice(3);
                 this.opponentScore++;
                 int neededToLose = this.par - this.opponentScore;
                 if (neededToLose < 1) {
@@ -129,11 +127,11 @@ public class LoopyDice implements Game<LoopyDicePlayer>, DiceGame {
 
         } else {
             if (playerSum > oppSum) {
-                player.addDice(1);
+                this.getCurrentPlayer().addDice(1);
                 ConsoleServices.print("\nYou rolled a higher number than the opponent (" + playerSum + " vs " + oppSum + ")!\nPLAYER DICE + 1");
                 printResultsOfRound(playerSum, oppSum);
             } else if (oppSum > playerSum) {
-                opponent.addDice(1);
+                this.getOpponent().addDice(1);
                 ConsoleServices.print("\nThe opponent rolled a higher number than you (" + oppSum + " vs " + playerSum + ")!\nOPPONENT DICE + 1");
                 printResultsOfRound(playerSum, oppSum);
             } else {
@@ -154,8 +152,8 @@ public class LoopyDice implements Game<LoopyDicePlayer>, DiceGame {
     private void printResultsOfRound(int playerRoll, int oppRoll) {
         int playerBustVal;
         int oppBustVal;
-        playerBustVal = 15 + (2 * (player.getNumDice() - 3));
-        oppBustVal = 15 + (2 * (opponent.getNumDice() - 3));
+        playerBustVal = 15 + (2 * (this.getCurrentPlayer().getNumDice() - 3));
+        oppBustVal = 15 + (2 * (this.getOpponent().getNumDice() - 3));
 
         String test = "" +
                 "*************************************************************************\n" +
@@ -171,8 +169,8 @@ public class LoopyDice implements Game<LoopyDicePlayer>, DiceGame {
                 "***                          Enter a command                          ***\n" +
                 "*************************************************************************\n" ;
 
-        ConsoleServices.print("Player Dice   | " + player.getNumDice() + " - [Bust: " + playerBustVal + "]");
-        ConsoleServices.print("Opponent Dice | " + opponent.getNumDice() + " - [Bust: " + oppBustVal + "]" + "\n\n");
+        ConsoleServices.print("Player Dice   | " + this.getCurrentPlayer().getNumDice() + " - [Bust: " + playerBustVal + "]");
+        ConsoleServices.print("Opponent Dice | " + this.getOpponent().getNumDice() + " - [Bust: " + oppBustVal + "]" + "\n\n");
     }
 
     public void setPlayerScore(int playerScore) {
@@ -185,14 +183,6 @@ public class LoopyDice implements Game<LoopyDicePlayer>, DiceGame {
 
     public void setPar(int par) {
         this.par = par;
-    }
-
-    public void setPlayer(LoopyDicePlayer player) {
-        this.player = player;
-    }
-
-    public void setOpponent(LoopyDicePlayer opponent) {
-        this.opponent = opponent;
     }
 
     public enum RoundResult {

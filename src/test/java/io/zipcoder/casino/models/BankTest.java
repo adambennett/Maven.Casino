@@ -1,5 +1,7 @@
 package io.zipcoder.casino.models;
 
+import io.zipcoder.casino.App;
+import io.zipcoder.casino.players.Player;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -36,7 +38,11 @@ public class BankTest {
 
     @Test
     public void BuyBestValueTest() {
-
+        App app = new App();
+        app.runCasino();
+        Player adam = new Player("Adam");
+        app.logPlayerIn(adam);
+        adam.getWallet().addDollar(9999);
         ArrayList<Chip> myChips = Bank.buyBestValue(583);
         int blue = 0;
         int black = 0;
@@ -74,6 +80,11 @@ public class BankTest {
 
     @Test
     public void BuyChipsTest() {
+        App app = new App();
+        app.runCasino();
+        Player adam = new Player("Adam");
+        app.logPlayerIn(adam);
+        adam.getWallet().addDollar(9999);
         ArrayList<Chip> blueChips;
         ArrayList<Chip> blackChips;
         ArrayList<Chip> whiteChips;
@@ -97,4 +108,18 @@ public class BankTest {
         LOGGER.info(" " + nmbrOfBlackActual + " " + nmbrOfBlueActual + " " + nmbrOfGreenActual + " " + nmbrOfWhiteActual);
     }
 
+    @Test
+    public void buyChip() {
+        App app = new App();
+        app.runCasino();
+        Player adam = new Player("Adam");
+        app.logPlayerIn(adam);
+        adam.getWallet().addDollar(300);
+        ArrayList<Chip> expected = new ArrayList<>();
+        expected.add(new Chip(Chip.ChipValue.BLACK));
+        expected.add(new Chip(Chip.ChipValue.BLACK));
+        expected.add(new Chip(Chip.ChipValue.BLACK));
+        ArrayList<Chip> actual = Bank.buyChip(3, Chip.ChipValue.BLACK);
+        Assert.assertEquals(expected, actual);
+    }
 }

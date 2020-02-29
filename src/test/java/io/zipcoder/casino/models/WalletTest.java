@@ -1,5 +1,6 @@
 package io.zipcoder.casino.models;
 
+import io.zipcoder.casino.players.Player;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,6 +18,16 @@ public class WalletTest{
         wallet.addDollar(dollarsTotal);
         int expected = wallet.getDollars();
 
+        Assert.assertEquals(expected, dollarsTotal);
+    }
+
+    @Test
+    public void addDollarTestB(){
+        Wallet wallet = new Wallet(0, new HashMap<>(), new Player("Adam"));
+        int amt = 150;
+        int dollarsTotal = wallet.getDollars() + amt;
+        wallet.addDollar(dollarsTotal);
+        int expected = wallet.getDollars();
         Assert.assertEquals(expected, dollarsTotal);
     }
 

@@ -18,10 +18,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class GoFish implements Game<GoFishPlayer>, CardGame {
+public class GoFish extends Game<GoFishPlayer, GoFishNPC> implements CardGame {
 
-    private GoFishPlayer currentPlayer;
-    private GoFishNPC opponent;
     private Deck gameDeck;
     private boolean playerTurn;
     private int playerScore;
@@ -87,8 +85,8 @@ public class GoFish implements Game<GoFishPlayer>, CardGame {
     }
 
     public void updateScores() {
-        this.playerScore += updateHandAndGetScore(this.currentPlayer);
-        this.opponentScore += updateHandAndGetScore(this.opponent);
+        this.playerScore += updateHandAndGetScore(this.getCurrentPlayer());
+        this.opponentScore += updateHandAndGetScore(this.getOpponent());
     }
 
     public boolean pollCard(PlayingCard card, GoFishPlayer playerToPoll) {
@@ -96,20 +94,20 @@ public class GoFish implements Game<GoFishPlayer>, CardGame {
     }
 
     public void setup(GoFishPlayer player) {
-        this.currentPlayer = player;
-        this.opponent = new GoFishNPC();
+        this.setCurrentPlayer(player);
+        this.setOpponent(new GoFishNPC());
         for (int i = 0; i < this.startingHandSize * 2; i++) {
-            if (i%2==0) { this.currentPlayer.getHand().addAll(this.gameDeck.draw(1)); }
-            else { this.opponent.getHand().addAll(this.gameDeck.draw(1)); }
+            if (i%2==0) { this.getCurrentPlayer().getHand().addAll(this.gameDeck.draw(1)); }
+            else { this.getOpponent().getHand().addAll(this.gameDeck.draw(1)); }
         }
         ConsoleServices.print("Go Fish!");
-        ConsoleServices.print(this.opponent.generateWelcomeMessage());
+        ConsoleServices.print(this.getOpponent().generateWelcomeMessage());
         updateScores();
     }
 
     public void playerTurn() {
         refreshPlayerHand();
-        ConsoleServices.print("\nCards in hand: " + this.currentPlayer.printHand());
+        ConsoleServices.print("\nCards in hand: " + this.getCurrentPlayer().printHand());
         String input = ConsoleServices.getStringInput("Enter the Rank value of the card you wish to fish for: ");
         Integer guessedNum = -1;
         try {
@@ -118,31 +116,31 @@ public class GoFish implements Game<GoFishPlayer>, CardGame {
 
         if (guessedNum > -1 && guessedNum < 14) {
             PlayingCard polledCard = new PlayingCard(guessedNum);
-            boolean poll = pollCard(polledCard, this.opponent);
+            boolean poll = pollCard(polledCard, this.getOpponent());
             if (poll) {
-                ConsoleServices.print("\n                                 SUCCESS! " + this.opponent.getName() + " did have a " + polledCard.getValue() + "!");
-                this.opponent.getHand().remove(polledCard);
-                this.currentPlayer.getHand().add(polledCard);
+                ConsoleServices.print("\n                                 SUCCESS! " + this.getOpponent().getName() + " did have a " + polledCard.getValue() + "!");
+                this.getOpponent().getHand().remove(polledCard);
+                this.getCurrentPlayer().getHand().add(polledCard);
             }
             else {
                 ConsoleServices.print("\n                                 Go Fish!");
-                this.currentPlayer.draw(this.gameDeck, this.gameDrawAmt);
+                this.getCurrentPlayer().draw(this.gameDeck, this.gameDrawAmt);
             }
         } else { ConsoleServices.print("Please enter a card to fish for by number!"); }
     }
 
     public void opponentTurn() {
         refreshOpponentHand();
-        PlayingCard askCard = this.opponent.generateCardToAsk();
-        ConsoleServices.print("\n" + this.opponent.getName() + ": Fishing for " + askCard.getValue());
-        boolean poll = pollCard(askCard, this.currentPlayer);
+        PlayingCard askCard = this.getOpponent().generateCardToAsk();
+        ConsoleServices.print("\n" + this.getOpponent().getName() + ": Fishing for " + askCard.getValue());
+        boolean poll = pollCard(askCard, this.getCurrentPlayer());
         if (poll) {
-            ConsoleServices.print("                                 FISHED! You had a " + askCard.getValueAsInt() + "! " + this.opponent.getName() + " has now taken it from you.");
-            this.currentPlayer.getHand().remove(askCard);
-            this.opponent.getHand().add(askCard);
+            ConsoleServices.print("                                 FISHED! You had a " + askCard.getValueAsInt() + "! " + this.getOpponent().getName() + " has now taken it from you.");
+            this.getCurrentPlayer().getHand().remove(askCard);
+            this.getOpponent().getHand().add(askCard);
         } else {
             ConsoleServices.print("\n                                 Go Fish!");
-            this.opponent.draw(this.gameDeck, this.gameDrawAmt);
+            this.getOpponent().draw(this.gameDeck, this.gameDrawAmt);
         }
     }
 
@@ -154,7 +152,7 @@ public class GoFish implements Game<GoFishPlayer>, CardGame {
             if (this.playerTurn) {
                 playerTurn();
             } else {
-              opponentTurn();
+                opponentTurn();
             }
             this.playerTurn = !this.playerTurn;
             score();
@@ -163,18 +161,18 @@ public class GoFish implements Game<GoFishPlayer>, CardGame {
     }
 
     public Boolean refreshPlayerHand() {
-        if (this.currentPlayer.getHand().size() < 1 && gameDeck.getCards().size() > 0) {
+        if (this.getCurrentPlayer().getHand().size() < 1 && gameDeck.getCards().size() > 0) {
             ConsoleServices.print("Your hand is empty! Drawing 5 new cards.");
-            this.currentPlayer.getHand().addAll(this.gameDeck.draw(5));
+            this.getCurrentPlayer().getHand().addAll(this.gameDeck.draw(5));
             return true;
         }
         return false;
     }
 
     public Boolean refreshOpponentHand() {
-        if (this.opponent.getHand().size() < 1 && gameDeck.getCards().size() > 0) {
-            ConsoleServices.print(this.opponent.getName() + "'s hand is empty! Drawing 5 new cards.");
-            this.opponent.getHand().addAll(this.gameDeck.draw(5));
+        if (this.getOpponent().getHand().size() < 1 && gameDeck.getCards().size() > 0) {
+            ConsoleServices.print(this.getOpponent().getName() + "'s hand is empty! Drawing 5 new cards.");
+            this.getOpponent().getHand().addAll(this.gameDeck.draw(5));
             return true;
         }
         return false;
@@ -185,7 +183,7 @@ public class GoFish implements Game<GoFishPlayer>, CardGame {
         ConsoleServices.print("\nScoring...");
         ConsoleServices.print("Player Score: " + this.playerScore);
         ConsoleServices.print("Opponent Score: " + this.opponentScore);
-        ConsoleServices.print("Opponent Hand Size: " + this.opponent.getHand().size());
+        ConsoleServices.print("Opponent Hand Size: " + this.getOpponent().getHand().size());
         ConsoleServices.print("Draw Deck Size: " + this.gameDeck.getCards().size());
     }
 
@@ -202,6 +200,18 @@ public class GoFish implements Game<GoFishPlayer>, CardGame {
             return true;
         }
         return false;
+    }
+
+    public void setPlayerScore(int playerScore) {
+        this.playerScore = playerScore;
+    }
+
+    public void setOpponentScore(int opponentScore) {
+        this.opponentScore = opponentScore;
+    }
+
+    public void setGameDeck(Deck gameDeck) {
+        this.gameDeck = gameDeck;
     }
 
     public Deck getGameDeck() {

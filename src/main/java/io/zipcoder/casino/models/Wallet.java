@@ -36,36 +36,34 @@ public class Wallet {
         return false;
     }
 
-    public boolean addChip(Chip chip) {
-        return addChip(chip, 1);
+    public void addChip(Chip chip) {
+        addChip(chip, 1);
     }
 
 
-    public boolean addChip(Chip chip, int amt) {
+    public void addChip(Chip chip, int amt) {
         if (!chips.containsKey(chip)){
             chips.put(chip, amt);
         }
         else if (chips.containsKey(chip)) {
             chips.put(chip,chips.get(chip)+amt);
         }
-
-        return false;
     }
 
-    public boolean subDollar(int amt) {
-        dollars -= amt;
-        return false;
+    public Boolean subDollar(int amt) {
+        if (dollars >= amt) {
+            dollars -= amt;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean subChip(Chip chip) {
         if (chips.containsKey(chip)){
             chips.put(chip,chips.get(chip)-1);
+            return true;
         }
-
-        return false;
-    }
-
-    public boolean subChip(int dollarAmt) {
         return false;
     }
 
@@ -75,21 +73,5 @@ public class Wallet {
 
     public Map<Chip, Integer> getChips() {
         return chips;
-    }
-
-    public Player getOwner() {
-        return owner;
-    }
-
-    public void setDollars(int dollars) {
-        this.dollars = dollars;
-    }
-
-    public void setChips(Map<Chip, Integer> chips) {
-        this.chips = chips;
-    }
-
-    public void setOwner(Player owner) {
-        this.owner = owner;
     }
 }
