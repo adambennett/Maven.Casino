@@ -22,8 +22,6 @@ public class BlackJack implements Game<BlackJackPlayer>, CardGame {
     private Deck gameDeck;
     private BlackJackPlayer currentPlayer;
     private Dealer opponent;
-    private Chip placeBet;
-    private int gameDrawAmt;
     private boolean playerTurn;
     private boolean findWinner;
     private Chip white = new Chip(Chip.ChipValue.WHITE);
@@ -37,13 +35,7 @@ public class BlackJack implements Game<BlackJackPlayer>, CardGame {
 
     public BlackJack(int drawAmt, boolean playerGoesFirst){
         this.gameDeck = new Deck();
-        this.gameDrawAmt = drawAmt;
         this.playerTurn = playerGoesFirst;
-    }
-
-
-    public void newDeal() {
-        bets.add(placeBet);
     }
 
     @Override

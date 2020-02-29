@@ -98,10 +98,6 @@ public abstract class AbstractConsole {
     }
 
     public void findAndProcessCommand(ArrayList<String> args) {
-        String fullCommand = "";
-        for (String s : args) {
-            fullCommand += s + " ";
-        }
         String command = args.remove(0).toLowerCase();
         String hiddenCmd = "";
         boolean allowOtherConsoles = false;
@@ -142,7 +138,7 @@ public abstract class AbstractConsole {
         LoginConsole loginConsole = new LoginConsole();
         StatsConsole statsConsole = new StatsConsole();
         try {
-            Integer val = Integer.parseInt(cmd);
+            Integer.parseInt(cmd);
         } catch (NumberFormatException ex) {
             if (console.commandExists(cmd)) { return true; }
             else if (currencyConsole.commandExists(cmd)) { return true; }
@@ -160,7 +156,7 @@ public abstract class AbstractConsole {
         LoginConsole loginConsole = new LoginConsole();
         StatsConsole statsConsole = new StatsConsole();
         try {
-            Integer val = Integer.parseInt(cmd);
+            Integer.parseInt(cmd);
         } catch (NumberFormatException ex) {
             if (console.commandExists(cmd)) { return console; }
             else if (currencyConsole.commandExists(cmd)) { return currencyConsole; }
@@ -175,23 +171,30 @@ public abstract class AbstractConsole {
 
     private void runOnInvalidCommand(AbstractConsole currentConsole) {
         ConsoleServices.print("Bad command! Please enter a valid command, or enter 'Help'.");
+
         if (App.isLoggedIn()) {
             if (currentConsole instanceof MainConsole) {
                 MainConsole console = (MainConsole) this;
                 console.printPrompt(PromptMessage.STANDARD, true);
-            } else if (currentConsole instanceof GamesConsole) {
+            }
+            else if (currentConsole instanceof GamesConsole) {
                 GamesConsole games = (GamesConsole) this;
                 games.printPrompt(PromptMessage.GAMES_MENU, true);
-            } else if (currentConsole instanceof StatsConsole) {
+            }
+            else if (currentConsole instanceof StatsConsole) {
                 StatsConsole stat = (StatsConsole) this;
                 stat.printPrompt(PromptMessage.STATS_MENU, true);
-            } else if (currentConsole instanceof CurrencyConsole) {
+            }
+            else if (currentConsole instanceof CurrencyConsole) {
                 CurrencyConsole curr = (CurrencyConsole) this;
                 curr.printPrompt(PromptMessage.CURRENCY_MENU, true);
-            } else {
+            }
+            else {
                 this.printPrompt(PromptMessage.STANDARD, true);
             }
-        } else {
+        }
+
+        else {
             printPrompt(PromptMessage.LOGIN, true);
         }
         return;

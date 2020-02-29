@@ -1,6 +1,7 @@
 package io.zipcoder.casino.players;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.zipcoder.casino.models.Deck;
 import io.zipcoder.casino.models.PlayingCard;
 import io.zipcoder.casino.models.Wallet;
 
@@ -16,11 +17,6 @@ public class CardPlayer extends Player {
     public CardPlayer(String name) {
        super(name);
        this.hand = new ArrayList<>();
-    }
-
-    public CardPlayer(String name, String password, Wallet wallet) {
-        super(name, password, wallet);
-        this.hand = new ArrayList<>();
     }
 
     public CardPlayer(Player player) {
@@ -50,5 +46,12 @@ public class CardPlayer extends Player {
         }
         toRet = toRet.substring(0, toRet.length() - 2);
         return toRet;
+    }
+
+    public Boolean draw(Deck gameDeck, int amt) {
+        int size = this.getHand().size();
+        this.getHand().addAll(gameDeck.draw(amt));
+        int afterDrawSize = this.getHand().size();
+        return afterDrawSize - amt == size;
     }
 }

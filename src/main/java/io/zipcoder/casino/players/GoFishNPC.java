@@ -11,7 +11,6 @@ import java.util.Random;
 public class GoFishNPC extends CardPlayer {
 
     private int gameDrawAmt;
-    private String name;
     private Random rng;
     private ArrayList<String> welcomeMessages;
 
@@ -33,27 +32,6 @@ public class GoFishNPC extends CardPlayer {
 
     public PlayingCard generateCardToAsk() {
         return (this.getHand().size() > 0) ? this.getHand().get(this.rng.nextInt(this.getHand().size())) : null;
-    }
-
-    private void updateName() {
-        if (this.welcomeMessages.size() < 1) {
-            this.welcomeMessages.add("Hello, I am " + this.name + ". Good luck!");
-        }
-    }
-
-    public boolean hasCard(PlayingCard card) {
-        return (this.getHand().size() > 0) ? this.getHand().contains(card) : false;
-    }
-
-    public Boolean goFish(Deck gameDeck) {
-        int size = this.getHand().size();
-        this.getHand().addAll(gameDeck.draw(this.gameDrawAmt));
-        int afterDrawSize = this.getHand().size();
-        return afterDrawSize - this.gameDrawAmt == size;
-    }
-
-    public void setGameDrawAmt(int gameDrawAmt) {
-        this.gameDrawAmt = gameDrawAmt;
     }
 
 }

@@ -10,7 +10,7 @@ public class LoopyDicePlayer extends DicePlayer  {
     }
 
     public LoopyDicePlayer(Player player) {
-        super(player.getName(), player.getPassword(), player.getWallet());
+        super(player);
     }
 
 }

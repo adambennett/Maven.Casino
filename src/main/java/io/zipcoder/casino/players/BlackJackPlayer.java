@@ -22,14 +22,9 @@ public class BlackJackPlayer extends CardPlayer {
         super(name);
     }
 
-    public BlackJackPlayer(String name, String password, Wallet wallet) {
-        super(name, password, wallet);
-    }
-
     public BlackJackPlayer(Player player) {
-        super(player.getName(), player.getPassword(), player.getWallet());
+        super(player);
     }
-
 
     public void doubleDown(PlayingCard card, Chip chip) {
         addCardToHand(card);

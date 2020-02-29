@@ -12,9 +12,8 @@ public class Player implements Comparable<Player> {
     private Wallet wallet;
     private StatsModel stats;
 
-    public Player() {
-
-    }
+    // For proper JSON deserialization
+    public Player() {}
 
     // For tests
     public Player(String name) {
@@ -49,10 +48,6 @@ public class Player implements Comparable<Player> {
 
     public StatsModel getStats() {
         return stats;
-    }
-
-    public void setStats(StatsModel stats) {
-        this.stats = stats;
     }
 
     @Override
