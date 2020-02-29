@@ -73,16 +73,6 @@ public class LoginConsole extends AbstractConsole {
                 Player newUser = new Player(user, pass, new Wallet());
                 Database.addUser(newUser);
                 App.logPlayerIn(Database.getPlayer(user));
-
-                // PLACEHOLDER!!
-                // TODO
-                App.getCurrentPlayer().getWallet().addDollar(6000);
-                for (Chip c : Bank.buyChip(1, Chip.ChipValue.BLACK)) { App.getCurrentPlayer().getWallet().addChip(c); }
-                for (Chip c : Bank.buyChip(10, Chip.ChipValue.BLUE)) { App.getCurrentPlayer().getWallet().addChip(c); }
-                for (Chip c : Bank.buyChip(100, Chip.ChipValue.GREEN)) { App.getCurrentPlayer().getWallet().addChip(c); }
-                for (Chip c : Bank.buyChip(1000, Chip.ChipValue.WHITE)) { App.getCurrentPlayer().getWallet().addChip(c); }
-                // TODO
-
                 return true;
             }
         }
