@@ -40,13 +40,25 @@ public class Wallet {
         addChip(chip, 1);
     }
 
+    public Integer getNumOfChips(Chip.ChipValue type) {
+        for (Map.Entry<Chip, Integer> entry : chips.entrySet()) {
+            if (entry.getKey().getVal().equals(type)) {
+                return entry.getValue();
+            }
+        }
+        return 0;
+    }
 
     public void addChip(Chip chip, int amt) {
-        if (!chips.containsKey(chip)){
-            chips.put(chip, amt);
+        boolean found = false;
+        for (Map.Entry<Chip, Integer> entry : chips.entrySet()) {
+            if (entry.getKey().getVal().equals(chip.getVal())) {
+                found = true;
+                chips.put(entry.getKey(), entry.getValue() + amt);
+            }
         }
-        else if (chips.containsKey(chip)) {
-            chips.put(chip,chips.get(chip)+amt);
+        if (!found) {
+            chips.put(chip, amt);
         }
     }
 
@@ -60,9 +72,13 @@ public class Wallet {
     }
 
     public boolean subChip(Chip chip) {
-        if (chips.containsKey(chip)){
-            chips.put(chip,chips.get(chip)-1);
-            return true;
+        for (Map.Entry<Chip, Integer> entry : chips.entrySet()) {
+            if (entry.getKey().getVal().equals(chip.getVal()) && entry.getValue() > 1) {
+                chips.put(entry.getKey(), entry.getValue() - 1);
+                return true;
+            } else if (entry.getKey().getVal().equals(chip.getVal())) {
+                chips.remove(entry.getKey());
+            }
         }
         return false;
     }

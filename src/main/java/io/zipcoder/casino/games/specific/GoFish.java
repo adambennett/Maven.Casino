@@ -147,8 +147,7 @@ public class GoFish extends Game<GoFishPlayer, GoFishNPC> implements CardGame {
     @Override
     public void runGame(GoFishPlayer player) {
         setup(player);
-        boolean gameOver = false;
-        while (!gameOver) {
+        while (!gameEndCheck()) {
             if (this.playerTurn) {
                 playerTurn();
             } else {
@@ -156,7 +155,6 @@ public class GoFish extends Game<GoFishPlayer, GoFishNPC> implements CardGame {
             }
             this.playerTurn = !this.playerTurn;
             score();
-            gameOver = gameEndCheck();
         }
     }
 

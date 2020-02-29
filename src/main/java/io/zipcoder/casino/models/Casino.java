@@ -18,7 +18,7 @@ import java.util.Map;
 
 public class Casino {
 
-    private Map<AbstractConsole.Command, Game> games;
+    private HashMap<AbstractConsole.Command, Game> games;
     private Player currentPlayer;
 
     public void startGame(AbstractConsole.Command cmd) {
@@ -73,7 +73,7 @@ public class Casino {
         gofish.runGame((GoFishPlayer) currentPlayer);
     }
 
-    public Map<AbstractConsole.Command, Game> getGames() {
+    public HashMap<AbstractConsole.Command, Game> getGames() {
         return games;
     }
 

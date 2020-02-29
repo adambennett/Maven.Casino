@@ -6,6 +6,7 @@ import io.zipcoder.casino.games.specific.Craps;
 import io.zipcoder.casino.games.specific.GoFish;
 import io.zipcoder.casino.games.specific.LoopyDice;
 import io.zipcoder.casino.models.Chip;
+import io.zipcoder.casino.models.StatsModel;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,17 @@ public class StatTracker {
         overallLosses = 0;
         totalLifetimeChipWinnings = 0;
         totalCashSpent = 0;
+    }
+
+    public static void setStats(StatsModel mod) {
+        StatTracker.crapsWins = mod.getCrapsWins();
+        StatTracker.goFishWins = mod.getGoFishWins();
+        StatTracker.blackJackWins = mod.getBlackJackWins();
+        StatTracker.loopyWins = mod.getLoopyWins();
+        StatTracker.overallLosses = mod.getOverallLosses();
+        StatTracker.totalCashSpent = mod.getTotalCashSpent();
+        StatTracker.totalLifetimeChipWinnings = mod.getTotalLifetimeChipWinnings();
+        StatTracker.highestChipValue = mod.getHighestChipValue();
     }
 
     public static void clearAllStats() {

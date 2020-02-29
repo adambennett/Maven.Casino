@@ -7,8 +7,7 @@ import io.zipcoder.casino.games.specific.BlackJack;
 import io.zipcoder.casino.games.specific.Craps;
 import io.zipcoder.casino.games.specific.GoFish;
 import io.zipcoder.casino.games.specific.LoopyDice;
-import io.zipcoder.casino.players.BlackJackPlayer;
-import io.zipcoder.casino.players.Player;
+import io.zipcoder.casino.players.*;
 import io.zipcoder.casino.utilities.io.AbstractConsole;
 import org.junit.Assert;
 import org.junit.Test;
@@ -28,7 +27,9 @@ public class CasinoTest {
         expected.put(AbstractConsole.Command.GOFISH, new GoFish());
         expected.put(AbstractConsole.Command.LOOPY_DICE, new LoopyDice());
         expected.put(AbstractConsole.Command.CRAPS, new Craps());
-        Assert.assertEquals(expected, actual);
+        for (Map.Entry<AbstractConsole.Command, Game> entry : expected.entrySet()) {
+            Assert.assertTrue(actual.containsKey(entry.getKey()));
+        }
     }
 
     @Test
@@ -62,5 +63,38 @@ public class CasinoTest {
         Assert.assertFalse(casino.getCurrentPlayer() instanceof BlackJackPlayer);
         casino.updateCurrentPlayer(new BlackJack());
         Assert.assertTrue(casino.getCurrentPlayer() instanceof BlackJackPlayer);
+    }
+
+    @Test
+    public void updateCurrentPlayerB() {
+        App app = new App();
+        app.runCasino();
+        Casino casino = app.getCasino();
+        casino.setCurrentPlayer(new Player("Adam"));
+        Assert.assertFalse(casino.getCurrentPlayer() instanceof GoFishPlayer);
+        casino.updateCurrentPlayer(new GoFish());
+        Assert.assertTrue(casino.getCurrentPlayer() instanceof GoFishPlayer);
+    }
+
+    @Test
+    public void updateCurrentPlayerC() {
+        App app = new App();
+        app.runCasino();
+        Casino casino = app.getCasino();
+        casino.setCurrentPlayer(new Player("Adam"));
+        Assert.assertFalse(casino.getCurrentPlayer() instanceof DicePlayer);
+        casino.updateCurrentPlayer(new Craps());
+        Assert.assertTrue(casino.getCurrentPlayer() instanceof DicePlayer);
+    }
+
+    @Test
+    public void updateCurrentPlayerD() {
+        App app = new App();
+        app.runCasino();
+        Casino casino = app.getCasino();
+        casino.setCurrentPlayer(new Player("Adam"));
+        Assert.assertFalse(casino.getCurrentPlayer() instanceof LoopyDicePlayer);
+        casino.updateCurrentPlayer(new LoopyDice());
+        Assert.assertTrue(casino.getCurrentPlayer() instanceof LoopyDicePlayer);
     }
 }

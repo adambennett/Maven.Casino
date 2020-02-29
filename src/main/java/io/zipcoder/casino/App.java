@@ -1,6 +1,7 @@
 package io.zipcoder.casino;
 
 import io.zipcoder.casino.games.Game;
+import io.zipcoder.casino.models.StatsModel;
 import io.zipcoder.casino.players.Player;
 import io.zipcoder.casino.models.Casino;
 import io.zipcoder.casino.utilities.io.AbstractConsole;
@@ -37,6 +38,9 @@ public class App {
     public static void logPlayerIn(Player p) {
         casino.setCurrentPlayer(p);
         setLoginStatus();
+        if (p.getStats() != null) {
+            StatTracker.setStats(p.getStats());
+        }
     }
 
     public static Player getCurrentPlayer() {

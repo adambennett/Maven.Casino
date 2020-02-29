@@ -1,6 +1,9 @@
 package io.zipcoder.casino.models;
 
+import io.zipcoder.casino.App;
 import io.zipcoder.casino.players.Player;
+import io.zipcoder.casino.utilities.io.AbstractConsole;
+import io.zipcoder.casino.utilities.io.BuyChipsConsole;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,7 +20,6 @@ public class WalletTest{
         int dollarsTotal = wallet.getDollars() + amt;
         wallet.addDollar(dollarsTotal);
         int expected = wallet.getDollars();
-
         Assert.assertEquals(expected, dollarsTotal);
     }
 
@@ -77,6 +79,22 @@ public class WalletTest{
         int expected = 3;
         int actual = totalChips;
 
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void emptyChipTypeTest() {
+        App appl = new App();
+        appl.runCasino();
+        Player adam = new Player("Adam");
+        appl.logPlayerIn(adam);
+        adam.getWallet().addDollar(10);
+        BuyChipsConsole buyChipsConsole = new BuyChipsConsole();
+        ArrayList<String> arguments = new ArrayList<>();
+        arguments.add("10");
+        Boolean bought = buyChipsConsole.buyChip(AbstractConsole.Command.WHITE, arguments);
+        Integer actual = adam.getWallet().getNumOfChips(Chip.ChipValue.BLUE);
+        Integer expected = 0;
         Assert.assertEquals(expected, actual);
     }
 }

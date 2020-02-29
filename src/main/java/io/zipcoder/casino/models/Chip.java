@@ -40,7 +40,7 @@ public class Chip {
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Chip) {
-            return ((Chip) obj).getVal().toString().equals(this.getVal().toString());
+            return ((Chip) obj).toString().equals(this.toString());
         }
         return super.equals(obj);
     }
