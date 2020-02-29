@@ -231,7 +231,7 @@ public class MenuStrings {
                 "***    "+ playerStats.getTotalLifetimeChipWinnings() +" |  Total Lifetime Chip Winnings                              ***\n" +
                 "***    "+ playerStats.getTotalCashSpent() +" |  Total Cash Spent                                          ***\n" +
                 "***-------------------------------------------------------------------***\n" +
-                "***    0 |  Return to main  menu                                      ***\n" +
+                "***    0 |  Return to main menu                                       ***\n" +
                 "***    1 |  Leaderboard                                               ***\n" +
                 "*************************************************************************\n" +
                 "***                          Enter a command                          ***\n" +
@@ -286,7 +286,7 @@ public class MenuStrings {
                 "*************************************************************************\n" +
                 leaderboardPlayers +
                 "***-------------------------------------------------------------------***\n" +
-                "***    0 |  Return to the main  menu                                  ***\n" +
+                "***    0 |  Return to the main menu                                   ***\n" +
                 "***    2 |  Individual stats                                          ***\n" +
                 "*************************************************************************\n" +
                 "***                          Enter a command                          ***\n" +
