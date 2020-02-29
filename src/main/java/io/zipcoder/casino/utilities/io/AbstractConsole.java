@@ -29,7 +29,11 @@ public abstract class AbstractConsole {
         DEPOSIT,
         BUY_CHIPS,
         CASHOUT,
-        VIEW_CHIPS
+        VIEW_CHIPS,
+        BLACK,
+        BLUE,
+        WHITE,
+        GREEN
     }
 
     public enum PromptMessage {
@@ -123,7 +127,6 @@ public abstract class AbstractConsole {
     }
 
     public void printPrompt(PromptMessage message, boolean promptForInput) {
-        MenuStrings.loadStrings();
         String promptString = MenuStrings.getStringFromPromptType(message);
         ConsoleServices.print(promptString);
         if (promptForInput) {

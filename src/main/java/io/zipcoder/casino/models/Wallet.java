@@ -37,12 +37,17 @@ public class Wallet {
     }
 
     public boolean addChip(Chip chip) {
+        return addChip(chip, 1);
+    }
+
+
+    public boolean addChip(Chip chip, int amt) {
         if (!chips.containsKey(chip)){
-            chips.put(chip, 1);
+            chips.put(chip, amt);
         }
         else if (chips.containsKey(chip)) {
-            chips.put(chip,chips.get(chip)+1);
-                    }
+            chips.put(chip,chips.get(chip)+amt);
+        }
 
         return false;
     }

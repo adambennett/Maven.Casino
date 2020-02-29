@@ -78,24 +78,18 @@ public class BankTest {
         ArrayList<Chip> blackChips;
         ArrayList<Chip> whiteChips;
         ArrayList<Chip> greenChips;
-
-
         blackChips = Bank.buyBlack(3);
         blueChips = Bank.buyBlue(2);
         greenChips = Bank.buyGreen(1);
         whiteChips = Bank.buyWhite(5);
-
-
         int nmbrOfBlackExpected = 3;
         int nmbrOfGreenExpected = 1;
         int nmbrOfWhiteExpected = 5;
         int nmbrOfBlueExpected = 2;
-
         int nmbrOfBlackActual = blackChips.size();
         int nmbrOfGreenActual = greenChips.size();
         int nmbrOfWhiteActual = whiteChips.size();
         int nmbrOfBlueActual = blueChips.size();
-
         Assert.assertEquals(nmbrOfBlackExpected,nmbrOfBlackActual);
         Assert.assertEquals(nmbrOfBlueExpected, nmbrOfBlueActual);
         Assert.assertEquals(nmbrOfGreenExpected,nmbrOfGreenActual);

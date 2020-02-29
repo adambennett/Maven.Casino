@@ -46,15 +46,22 @@ public class Bank {
         return myChips;
     }
 
+    public static ArrayList<Chip> buyChip(int amt, Chip.ChipValue type) {
+        ArrayList<Chip> chips = new ArrayList<>();
+        amt = notEnoughChips(amt, type.getValue());
+        for (int i = 0; i < amt ; i++) {
+            chips.add(new Chip(type));
+        }
+        return chips;
+    }
+
     public static ArrayList<Chip> buyBlack(int amt) {
         ArrayList<Chip> blackChips = new ArrayList<>();
         amt = notEnoughChips(amt, Chip.ChipValue.BLACK.getValue());
         for (int i = 0; i < amt ; i++) {
             blackChips.add(new Chip(Chip.ChipValue.BLACK));
         }
-
         return blackChips;
-
     }
     public static ArrayList<Chip> buyBlue(int amt) {
         ArrayList<Chip> blueChips = new ArrayList<>();
@@ -88,15 +95,19 @@ public class Bank {
     }
 
     public static Integer notEnoughChips(int amt, int chipType){
-        Wallet myWallet = App.getCasino().getCurrentPlayer().getWallet();
-        int totalDollars = myWallet.getDollars();
-        int howManyCanIBuy = totalDollars / chipType;
+        if (App.isLoggedIn()) {
+            Wallet myWallet = App.getCasino().getCurrentPlayer().getWallet();
+            int totalDollars = myWallet.getDollars();
+            int howManyCanIBuy = totalDollars / chipType;
 
-        if(amt > howManyCanIBuy){
-            amt = howManyCanIBuy;
+            if(amt > howManyCanIBuy){
+                amt = howManyCanIBuy;
+            }
+
+            return amt;
+        } else {
+            return 0;
         }
-
-        return amt;
     }
 
 }

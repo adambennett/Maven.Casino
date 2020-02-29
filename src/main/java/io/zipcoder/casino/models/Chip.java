@@ -37,6 +37,14 @@ public class Chip {
         return this.val.toString();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Chip) {
+            return ((Chip) obj).getVal().toString().equals(this.getVal().toString());
+        }
+        return super.equals(obj);
+    }
+
     // Needed for proper JSON deserialization
     public Chip(String test) {}
 
