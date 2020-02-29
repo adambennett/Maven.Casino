@@ -217,6 +217,25 @@ public class MenuStrings {
                 "********************************************************************************************************************************\n" +
                 "*** Enter a command - By default will purchase the maximum amount of chips, unless an additional amount argument is provided ***\n" +
                 "********************************************************************************************************************************\n";
+        individualStats = "" +
+                "*************************************************************************\n" +
+                "***                      ZipCasino - Stats Menu                       ***\n" +
+                "*************************************************************************\n" +
+                "***    "+ playerStats.getBlackJackWins() +" |  Black Jack Wins                                           ***\n" +
+                "***    "+ playerStats.getGoFishWins() +" |  Go Fish Wins                                              ***\n" +
+                "***    "+ playerStats.getLoopyWins() +" |  Loopy Dice Wins                                           ***\n" +
+                "***    "+ playerStats.getCrapsWins() +" |  Craps Wins                                                ***\n" +
+                "***    "+ playerStats.getOverallWins() +" |  Overall Wins                                              ***\n" +
+                "***    "+ playerStats.getOverallLosses() +" |  Overall Losses                                            ***\n" +
+                "***    "+ playerStats.getGamblingWins() +" |  Gambling Wins                                             ***\n" +
+                "***    "+ playerStats.getTotalLifetimeChipWinnings() +" |  Total Lifetime Chip Winnings                              ***\n" +
+                "***    "+ playerStats.getTotalCashSpent() +" |  Total Cash Spent                                          ***\n" +
+                "***-------------------------------------------------------------------***\n" +
+                "***    0 |  Return to main  menu                                      ***\n" +
+                "***    1 |  Leaderboard                                               ***\n" +
+                "*************************************************************************\n" +
+                "***                          Enter a command                          ***\n" +
+                "*************************************************************************\n" ;
 
         String toCheck = "*********************************************************************";
         String front = "***    ";
@@ -269,26 +288,6 @@ public class MenuStrings {
                 "***-------------------------------------------------------------------***\n" +
                 "***    0 |  Return to the main  menu                                  ***\n" +
                 "***    2 |  Individual stats                                          ***\n" +
-                "*************************************************************************\n" +
-                "***                          Enter a command                          ***\n" +
-                "*************************************************************************\n" ;
-
-        individualStats = "" +
-                "*************************************************************************\n" +
-                "***                      ZipCasino - Stats Menu                       ***\n" +
-                "*************************************************************************\n" +
-                "***    "+ playerStats.getBlackJackWins() +" |  Black Jack Wins                                           ***\n" +
-                "***    "+ playerStats.getGoFishWins() +" |  Go Fish Wins                                              ***\n" +
-                "***    "+ playerStats.getLoopyWins() +" |  Loopy Dice Wins                                           ***\n" +
-                "***    "+ playerStats.getCrapsWins() +" |  Craps Wins                                                ***\n" +
-                "***    "+ playerStats.getOverallWins() +" |  Overall Wins                                              ***\n" +
-                "***    "+ playerStats.getOverallLosses() +" |  Overall Losses                                            ***\n" +
-                "***    "+ playerStats.getGamblingWins() +" |  Gambling Wins                                             ***\n" +
-                "***    "+ playerStats.getTotalLifetimeChipWinnings() +" |  Total Lifetime Chip Winnings                              ***\n" +
-                "***    "+ playerStats.getTotalCashSpent() +" |  Total Cash Spent                                          ***\n" +
-                "***-------------------------------------------------------------------***\n" +
-                "***    0 |  Return to main  menu                                      ***\n" +
-                "***    1 |  Leaderboard                                               ***\n" +
                 "*************************************************************************\n" +
                 "***                          Enter a command                          ***\n" +
                 "*************************************************************************\n" ;
