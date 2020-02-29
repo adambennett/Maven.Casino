@@ -28,7 +28,7 @@ public class DealerTest {
         PlayingCard card2 = new PlayingCard(5, PlayingCard.Suit.HEARTS);
         newDealer.addCardToHand(card);
         newDealer.addCardToHand(card2);
-        LOGGER.info(""+ newDealer.getHandValue());
+        LOGGER.info(""+ newDealer.getValue());
         Assert.assertTrue(newDealer.isHitting());
     }
 }

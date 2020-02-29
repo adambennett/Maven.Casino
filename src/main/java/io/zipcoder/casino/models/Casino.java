@@ -8,6 +8,7 @@ import io.zipcoder.casino.games.specific.GoFish;
 import io.zipcoder.casino.games.specific.LoopyDice;
 import io.zipcoder.casino.players.*;
 import io.zipcoder.casino.utilities.io.AbstractConsole;
+import io.zipcoder.casino.utilities.io.ConsoleServices;
 import io.zipcoder.casino.utilities.io.GamesConsole;
 import io.zipcoder.casino.utilities.io.MainConsole;
 
@@ -17,44 +18,62 @@ import java.util.Map;
 
 public class Casino {
 
-    private Map<String, Game> games;
+    private HashMap<AbstractConsole.Command, Game> games;
     private Player currentPlayer;
 
-    public void startGame(int gameNum) {
-        GamesConsole main = new GamesConsole();
-        switch (gameNum) {
-            case 1:
-                main.processCommand(AbstractConsole.Command.BLACKJACK, new ArrayList<>());
-                return;
-            case 2:
-                main.processCommand(AbstractConsole.Command.GOFISH, new ArrayList<>());
-                return;
-            case 3:
-                main.processCommand(AbstractConsole.Command.LOOPY_DICE, new ArrayList<>());
-                return;
-            case 4:
-                main.processCommand(AbstractConsole.Command.CRAPS, new ArrayList<>());
-                return;
-            default:
-                main.printPrompt(AbstractConsole.PromptMessage.STANDARD, true);
-                return;
+    public void startGame(AbstractConsole.Command cmd) {
+        switch (cmd) {
+            case BLACKJACK:
+                BlackJack blackJack = new BlackJack();
+                updateCurrentPlayer(blackJack);
+                blackJack.runGame((BlackJackPlayer) currentPlayer);
+                break;
+            case GOFISH:
+                runGoFish();
+                break;
+            case LOOPY_DICE:
+                LoopyDice loop = new LoopyDice();
+                updateCurrentPlayer(loop);
+                loop.runGame((LoopyDicePlayer) currentPlayer);
+                break;
+            case CRAPS:
+                Craps craps = new Craps();
+                updateCurrentPlayer(craps);
+                craps.runGame((DicePlayer) currentPlayer);
+                break;
         }
+        GamesConsole games = new GamesConsole();
+        games.printPrompt(AbstractConsole.PromptMessage.GAMES_MENU, true);
     }
 
 
     public Casino() {
         currentPlayer = new Player("temp");
         games = new HashMap<>();
-        games.put("blackjack", new BlackJack());
-        games.put("go fish", new GoFish());
-        games.put("gofish", new GoFish());
-        games.put("loopy", new LoopyDice());
-        games.put("loop", new LoopyDice());
-        games.put("loopydice", new LoopyDice());
-        games.put("craps", new Craps());
+        games.put(AbstractConsole.Command.BLACKJACK, new BlackJack());
+        games.put(AbstractConsole.Command.GOFISH, new GoFish());
+        games.put(AbstractConsole.Command.LOOPY_DICE, new LoopyDice());
+        games.put(AbstractConsole.Command.CRAPS, new Craps());
     }
 
-    public Map<String, Game> getGames() {
+    private void runGoFish() {
+        String input = ConsoleServices.getStringInput("Before you start the game, would you like to change the default Go Fish settings for this round?");
+        int scoreToWin = 20;
+        int startingHandSize = 5;
+        int deckSize = 52;
+        int amountToDrawOnFish = 1;
+        if (input.toLowerCase().equals("yes") || input.equals("1") || input.toLowerCase().equals("y")) {
+            try { Integer val = Integer.parseInt(ConsoleServices.getStringInput("Score to Win: ")); scoreToWin = val; } catch (NumberFormatException ex) {}
+            try { Integer val = Integer.parseInt(ConsoleServices.getStringInput("Starting Hand Size: ")); startingHandSize = val; } catch (NumberFormatException ex) {}
+            try { Integer val = Integer.parseInt(ConsoleServices.getStringInput("Deck Size: ")); deckSize = val; } catch (NumberFormatException ex) {}
+            try { Integer val = Integer.parseInt(ConsoleServices.getStringInput("Number of Cards to Draw on GoFish action: ")); amountToDrawOnFish = val; } catch (NumberFormatException ex) {}
+        }
+        GoFish gofish = new GoFish(amountToDrawOnFish, scoreToWin, startingHandSize, deckSize);
+        updateCurrentPlayer(gofish);
+        gofish.runGame((GoFishPlayer) currentPlayer);
+    }
+
+    public HashMap<AbstractConsole.Command, Game> getGames() {
         return games;
     }
 
@@ -63,6 +82,10 @@ public class Casino {
     }
 
     public void setCurrentPlayer(Player player) { currentPlayer = player;}
+
+    public Boolean isGame(AbstractConsole.Command gameCmd) {
+        return this.games.containsKey(gameCmd);
+    }
 
     public void updateCurrentPlayer(Game currentGame) {
         if (currentGame instanceof BlackJack) {

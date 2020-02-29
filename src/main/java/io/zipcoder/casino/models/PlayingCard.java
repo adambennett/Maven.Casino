@@ -10,6 +10,10 @@ public class PlayingCard implements Comparable<PlayingCard> {
     private Rank value;
     private Suit suit;
 
+    public PlayingCard(int value) {
+        this(value, Suit.DIAMONDS);
+    }
+
     public PlayingCard(Rank value, Suit suit) {
         this.value = value;
         this.suit = suit;
@@ -25,20 +29,12 @@ public class PlayingCard implements Comparable<PlayingCard> {
         }
     }
 
-    public PlayingCard(int value) {
-        this(value, Suit.DIAMONDS);
-    }
-
     public Rank getValue() {
         return value;
     }
 
     public int getValueAsInt() {
         return value.getVal();
-    }
-
-    public Suit getSuit() {
-        return suit;
     }
 
     @Override

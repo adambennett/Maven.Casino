@@ -1,34 +1,21 @@
 package io.zipcoder.casino.games.specific;
 
-import io.zipcoder.casino.App;
 import io.zipcoder.casino.games.DiceGame;
 import io.zipcoder.casino.games.Game;
-import io.zipcoder.casino.models.BettingArea;
-import io.zipcoder.casino.models.Chip;
-import io.zipcoder.casino.models.CrapsTable;
+import io.zipcoder.casino.models.Dice;
 import io.zipcoder.casino.players.DicePlayer;
 import io.zipcoder.casino.utilities.MenuStrings;
-import io.zipcoder.casino.utilities.io.AbstractConsole;
 import io.zipcoder.casino.utilities.io.ConsoleServices;
-import io.zipcoder.casino.utilities.io.MainConsole;
 import io.zipcoder.casino.utilities.persistence.StatTracker;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
-public class Craps implements Game, DiceGame {
+public class Craps extends Game<DicePlayer, DicePlayer> implements DiceGame {
 
-    private DicePlayer currentPlayer;
-
-    public Craps() {
-
-    }
-
+    public Craps() {}
 
     @Override
-    public void runGame() {
+    public void runGame(DicePlayer player) {
 
         int amount = 200;
 
@@ -166,117 +153,5 @@ public class Craps implements Game, DiceGame {
     }
 
 }
-
-// initiate console
-// create dice
-// create craps player
-// check player balance (wallet)
-// get user input (What bet?)
-// evaluate bet
-// roll dice
-// evaluate dice value
-
-
-//    public int sumOfDice;
-//    public enum gameStatus {Continue, Won, Lost};
-//    public final int[] craps = {2, 3, 12};
-//    public final int[] winningFirstRoll = {7, 11};
-//    public int pointNumber = 0;
-//
-//// craps player constructor
-//    public Craps(DicePlayer player) {
-//    this.DicePlayer = new DicePlayer;
-//    }
-//// craps dice creator
-//    public Dice[] createDice() {
-//        Dice[] crapsDice = new Dice[2];
-//        for (int i = 0; i < crapsDice.length; i++) {
-//            crapsDice[i] = new Dice();
-//        }
-//        return crapsDice;
-//    }
-//
-//
-//    // before first roll
-//    // get balance
-//    // get String input (what bet?)
-//    // evaluate bet (pass/dontPass)
-//    // roll dice
-//    // evaluate sumOfDice
-//
-//    public void passLine() {
-//        if (sumOfDice == 7 || sumOfDice == 11) {
-//            return gameStatus(Won);
-//        } else if (sumOfDice == 2 || sumOfDice == 3 || sumOfDice == 12) {
-//            return gameStatus(Lost);
-//        } else if (sumOfDice == 12) {
-//            return gameStatus(Continue);
-//        }  else (sumOfDice == pointNumber) {
-//              return Continue;
-//        }
-//        return Continue;
-//    }
-//
-//    public void dontPassLine() {
-//        if (sumOfDice == 2 || sumOfDice == 3 || sumOfDice == 12) {
-//            return gameStatus(Won);
-//        } else if (sumOfDice == 7 || sumOfDice == 11) {
-//            return gameStatus(Lost);
-//        } else (sumOfDice == pointNumber);
-//        return gameStatus(Continue);
-//    }
-//
-//    //after first roll
-//
-//    public void comeBet() {
-//            if (sumOfDice == pointNumber) {
-//                return gameStatus(Won);
-//            } else if (sumOfDice == 7) {
-//                return gameStatus(Lost);
-//            }
-//            return gameStatus(Continue);
-//
-//    }
-//
-//    public void dontCome() {
-//            if (sumOfDice == 2 || sumOfDice == 3) {
-//                return gameStatus(Won);
-//            } else if (sumOfDice == 12) {
-//                return gameStatus(Continue);
-//            } else if (sumOfDice == 7) {
-//                return gameStatus(Won);
-//            } else if (sumOfDice == pointNumber) {
-//                return gameStatus(Lost);
-//            }
-//            return gameStatus(Continue);
-//    }
-//}
-
-
-
-     /*Craps logic
-      roll dice(2)
-      bets
-      (before first roll)
-      PassLine
-      7 or 11; win (reset)
-      2 or 3; lose (rest
-      12; push
-      Don't Pass
-      2 or 3; win (reset)
-      12; push
-      7 or 11; lose
-      (come-out roll)
-      first roll = set point;
-      Second roll =
-      Come bet
-      if roll = point; win
-      if roll = 7; lose
-      Don't Come
-      if roll = 2 or 3; win
-      if roll = 12; push
-      if roll = 7; win
-      if roll = point; lose
-      */
 
 

@@ -127,16 +127,13 @@ public class StatsModel implements Comparable<StatsModel> {
         this.totalCashSpent = totalCashSpent;
     }
 
-    public void setOverallScore(int overallScore) {
-        this.overallScore = overallScore;
-    }
-
     public int getOverallScore() {
         int score = 0;
         score += this.overallWins * 3;
         score -= this.overallLosses;
         score += this.gamblingWins;
         score += this.highestChipValue / 3.0f;
+        if (score < 0) { score = 0; }
         return score;
     }
 
@@ -145,5 +142,10 @@ public class StatsModel implements Comparable<StatsModel> {
         int weightScoreThis = this.getOverallScore();
         int weightScoreOther = o.getOverallScore();
         return (weightScoreThis > weightScoreOther) ? 1 : (weightScoreThis < weightScoreOther) ? -1 : 0;
+    }
+
+    // Needed for proper JSON deserialization
+    public void setOverallScore(int overallScore) {
+        this.overallScore = overallScore;
     }
 }

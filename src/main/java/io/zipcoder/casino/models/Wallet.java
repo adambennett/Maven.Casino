@@ -11,7 +11,7 @@ import java.util.Map;
 public class Wallet {
 
     private int dollars;
-    private Map<Chip, Integer> chips = new HashMap<>();
+    private Map<Chip, Integer> chips;
     private Player owner;
 
     public Wallet() {
@@ -35,35 +35,51 @@ public class Wallet {
         dollars += amt;
         return false;
     }
-    public boolean addAllChips(ArrayList<Chip> chips1){
-        return false;
+
+    public void addChip(Chip chip) {
+        addChip(chip, 1);
     }
 
-    public boolean addChip(Chip chip) {
-        if (!chips.containsKey(chip)){
-            chips.put(chip, 1);
+    public Integer getNumOfChips(Chip.ChipValue type) {
+        for (Map.Entry<Chip, Integer> entry : chips.entrySet()) {
+            if (entry.getKey().getVal().equals(type)) {
+                return entry.getValue();
+            }
         }
-        else if (chips.containsKey(chip)) {
-            chips.put(chip,chips.get(chip)+1);
-                    }
-
-        return false;
+        return 0;
     }
 
-    public boolean subDollar(int amt) {
-        dollars -= amt;
-        return false;
+    public void addChip(Chip chip, int amt) {
+        boolean found = false;
+        for (Map.Entry<Chip, Integer> entry : chips.entrySet()) {
+            if (entry.getKey().getVal().equals(chip.getVal())) {
+                found = true;
+                chips.put(entry.getKey(), entry.getValue() + amt);
+            }
+        }
+        if (!found) {
+            chips.put(chip, amt);
+        }
+    }
+
+    public Boolean subDollar(int amt) {
+        if (dollars >= amt) {
+            dollars -= amt;
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public boolean subChip(Chip chip) {
-        if (chips.containsKey(chip)){
-            chips.put(chip,chips.get(chip)-1);
+        for (Map.Entry<Chip, Integer> entry : chips.entrySet()) {
+            if (entry.getKey().getVal().equals(chip.getVal()) && entry.getValue() > 1) {
+                chips.put(entry.getKey(), entry.getValue() - 1);
+                return true;
+            } else if (entry.getKey().getVal().equals(chip.getVal())) {
+                chips.remove(entry.getKey());
+            }
         }
-
-        return false;
-    }
-
-    public boolean subChip(int dollarAmt) {
         return false;
     }
 
@@ -73,21 +89,5 @@ public class Wallet {
 
     public Map<Chip, Integer> getChips() {
         return chips;
-    }
-
-    public Player getOwner() {
-        return owner;
-    }
-
-    public void setDollars(int dollars) {
-        this.dollars = dollars;
-    }
-
-    public void setChips(Map<Chip, Integer> chips) {
-        this.chips = chips;
-    }
-
-    public void setOwner(Player owner) {
-        this.owner = owner;
     }
 }

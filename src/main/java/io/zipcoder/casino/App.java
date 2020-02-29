@@ -1,6 +1,7 @@
 package io.zipcoder.casino;
 
 import io.zipcoder.casino.games.Game;
+import io.zipcoder.casino.models.StatsModel;
 import io.zipcoder.casino.players.Player;
 import io.zipcoder.casino.models.Casino;
 import io.zipcoder.casino.utilities.io.AbstractConsole;
@@ -16,32 +17,18 @@ public class App {
     public static void main(String[] args) {
         App application = new App();
         application.initialize();
-
-        // Example print
-        // ConsoleServices.print("My cool message");
-
     }
 
     public void initialize() {
-        casino = new Casino();
+        runCasino();
         StatTracker st = new StatTracker();
         SaveLoadServices.loadJSONData(SaveLoadServices.SAVE_FILE_NAME);
         LoginConsole login = new LoginConsole();
-        login.printPrompt(AbstractConsole.PromptMessage.LOGIN, true);
-
-        /* Test games */
-        // Run LoopyDice
-            //LoopyDice game = new LoopyDice();
-            //game.runGame();
-
-        // Run Go Fish
-            //GoFish game = new GoFish();
-            //game.runGame();
+        login.printPrompt(AbstractConsole.PromptMessage.WELCOME, true);
     }
 
-
-    public static void updatePlayer(Game currentGame) {
-        casino.updateCurrentPlayer(currentGame);
+    public void runCasino() {
+        casino = new Casino();
     }
 
     public static Casino getCasino() {
@@ -51,6 +38,9 @@ public class App {
     public static void logPlayerIn(Player p) {
         casino.setCurrentPlayer(p);
         setLoginStatus();
+        if (p.getStats() != null) {
+            StatTracker.setStats(p.getStats());
+        }
     }
 
     public static Player getCurrentPlayer() {

@@ -6,6 +6,7 @@ import io.zipcoder.casino.games.specific.Craps;
 import io.zipcoder.casino.games.specific.GoFish;
 import io.zipcoder.casino.games.specific.LoopyDice;
 import io.zipcoder.casino.models.Chip;
+import io.zipcoder.casino.models.StatsModel;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,28 @@ public class StatTracker {
     public static int totalCashSpent;
 
     static {
+        blackJackWins = 0;
+        goFishWins = 0;
+        loopyWins = 0;
+        crapsWins = 0;
+        highestChipValue = 0;
+        overallLosses = 0;
+        totalLifetimeChipWinnings = 0;
+        totalCashSpent = 0;
+    }
+
+    public static void setStats(StatsModel mod) {
+        StatTracker.crapsWins = mod.getCrapsWins();
+        StatTracker.goFishWins = mod.getGoFishWins();
+        StatTracker.blackJackWins = mod.getBlackJackWins();
+        StatTracker.loopyWins = mod.getLoopyWins();
+        StatTracker.overallLosses = mod.getOverallLosses();
+        StatTracker.totalCashSpent = mod.getTotalCashSpent();
+        StatTracker.totalLifetimeChipWinnings = mod.getTotalLifetimeChipWinnings();
+        StatTracker.highestChipValue = mod.getHighestChipValue();
+    }
+
+    public static void clearAllStats() {
         blackJackWins = 0;
         goFishWins = 0;
         loopyWins = 0;
@@ -46,26 +69,9 @@ public class StatTracker {
         }
     }
 
-    public static void updateHighestChipValue(ArrayList<Chip> currentChips) {
-        int dollarVal = 0;
-        for (Chip c : currentChips) {
-            c.getDollarVal();
-        }
-
-        if (dollarVal > highestChipValue) {
-            highestChipValue = dollarVal;
-        }
-    }
-
     public static void updateCashSpent(int spent) {
         totalCashSpent+=spent;
+        if (totalCashSpent<0) { totalCashSpent = 0; }
     }
 
-    public static void winChips(ArrayList<Chip> currentChips) {
-        int dollarVal = 0;
-        for (Chip c : currentChips) {
-            c.getDollarVal();
-        }
-        totalLifetimeChipWinnings+=dollarVal;
-    }
 }

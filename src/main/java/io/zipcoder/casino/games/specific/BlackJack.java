@@ -9,20 +9,17 @@ import io.zipcoder.casino.models.PlayingCard;
 import io.zipcoder.casino.models.Wallet;
 import io.zipcoder.casino.players.BlackJackPlayer;
 import io.zipcoder.casino.players.Dealer;
+import io.zipcoder.casino.utilities.MenuStrings;
 import io.zipcoder.casino.utilities.io.ConsoleServices;
 import io.zipcoder.casino.utilities.persistence.StatTracker;
 
 import javax.smartcardio.Card;
 import java.util.ArrayList;
 
-public class BlackJack implements Game, CardGame {
+public class BlackJack extends Game<BlackJackPlayer, Dealer> implements CardGame {
 
     private ArrayList<Chip> bets = new ArrayList<>();
     private Deck gameDeck;
-    private BlackJackPlayer currentPlayer;
-    private Dealer opponent;
-    private Chip placeBet;
-    private int gameDrawAmt;
     private boolean playerTurn;
     private boolean findWinner;
     private Chip white = new Chip(Chip.ChipValue.WHITE);
@@ -36,20 +33,13 @@ public class BlackJack implements Game, CardGame {
 
     public BlackJack(int drawAmt, boolean playerGoesFirst){
         this.gameDeck = new Deck();
-        this.gameDrawAmt = drawAmt;
         this.playerTurn = playerGoesFirst;
     }
 
-
-    public void newDeal() {
-        bets.add(placeBet);
-    }
-
     @Override
-    public void runGame() {
-        App.updatePlayer(this);
-        this.currentPlayer = (BlackJackPlayer) App.getCurrentPlayer();
-        this.opponent = new Dealer();
+    public void runGame(BlackJackPlayer player) {
+        this.setCurrentPlayer(player);
+        this.setOpponent(new Dealer());
         Boolean playerWon = false;
         Boolean gameOver = false;
 
@@ -72,25 +62,25 @@ public class BlackJack implements Game, CardGame {
 
         for (int i = 0; i < 4 ; i++) {
             if (i%2 == 0){
-                this.currentPlayer.getHand().addAll(
+                this.getCurrentPlayer().getHand().addAll(
                         this.gameDeck.draw(1));}
 
-            else { this.opponent.getHand().addAll(this.gameDeck.draw(1));}
+            else { this.getOpponent().getHand().addAll(this.gameDeck.draw(1));}
         }
-        this.currentPlayer.getValue();
+        this.getCurrentPlayer().getValue();
         while (!gameOver) {
             if (this.playerTurn)
             {
-                ConsoleServices.print("Cards in hand: " + this.currentPlayer.printHand());
-                ConsoleServices.print("Your hand value is: "+ this.currentPlayer.getValue());
-                ConsoleServices.print("The dealers' hand value is: "+ this.opponent.getHandValue());
+                ConsoleServices.print("Cards in hand: " + this.getCurrentPlayer().printHand());
+                ConsoleServices.print("Your hand value is: "+ this.getCurrentPlayer().getValue());
+                ConsoleServices.print("The dealers' hand value is: "+ this.getOpponent().getValue());
                 String input = ConsoleServices.getStringInput("Would you like to Hit or Stay? ");
                 String hitOrStay = "";
                 hitOrStay = input.toLowerCase();
                 if (hitOrStay.equals("hit")) {
-                    this.currentPlayer.getHand().addAll(this.gameDeck.draw(1));
-                    ConsoleServices.print("Your hand value is: "+ this.currentPlayer.getValue());
-                    if(this.currentPlayer.getValue() > 21){
+                    this.getCurrentPlayer().getHand().addAll(this.gameDeck.draw(1));
+                    ConsoleServices.print("Your hand value is: "+ this.getCurrentPlayer().getValue());
+                    if(this.getCurrentPlayer().getValue() > 21){
                         playerWon = false;
                         ConsoleServices.print("Sorry you lost!");
                         break;
@@ -98,9 +88,9 @@ public class BlackJack implements Game, CardGame {
                     String input2 = ConsoleServices.getStringInput("Would you like to Hit or Stay? ");
                     hitOrStay = (input2.toLowerCase());
                     if (hitOrStay.equals("hit")){
-                        this.currentPlayer.getHand().addAll(this.gameDeck.draw(1));
-                        ConsoleServices.print("Your hand value is: "+ this.currentPlayer.getValue());
-                        if(this.currentPlayer.getValue() > 21){
+                        this.getCurrentPlayer().getHand().addAll(this.gameDeck.draw(1));
+                        ConsoleServices.print("Your hand value is: "+ this.getCurrentPlayer().getValue());
+                        if(this.getCurrentPlayer().getValue() > 21){
                             playerWon = false;
                             ConsoleServices.print("Sorry you lost!");
                             break;
@@ -112,17 +102,17 @@ public class BlackJack implements Game, CardGame {
                 }
             }
             else {
-                if (this.opponent.isHitting()){
-                    this.opponent.getHand().addAll(this.gameDeck.draw(1));
-                    ConsoleServices.print("Dealers' hand value is: "+ this.opponent.getHandValue());
+                if (this.getOpponent().isHitting()){
+                    this.getOpponent().getHand().addAll(this.gameDeck.draw(1));
+                    ConsoleServices.print("Dealers' hand value is: "+ this.getOpponent().getValue());
                 }
                 this.findWinner = true;
             }
 
 
             if (this.findWinner) {
-                ConsoleServices.print("Let's see who won!\nYour hand: "+ this.currentPlayer.getValue()+"\nDealers hand: "+ this.opponent.getHandValue());
-                if(this.currentPlayer.getValue() < 22 && this.currentPlayer.getValue() > this.opponent.getHandValue() || this.opponent.getHandValue() > 21) {
+                ConsoleServices.print("Let's see who won!\nYour hand: "+ this.getCurrentPlayer().getValue()+"\nDealers hand: "+ this.getOpponent().getValue());
+                if(this.getCurrentPlayer().getValue() < 22 && this.getCurrentPlayer().getValue() > this.getOpponent().getValue() || this.getOpponent().getValue() > 21) {
                     playerWon = true;
                     ConsoleServices.print("You've won! "+ bets.get(0).getDollarVal()+ "$");
 

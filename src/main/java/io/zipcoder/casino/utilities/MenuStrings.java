@@ -15,6 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class MenuStrings {
 
     public static String login;
+    public static String onceLogin;
     public static String standard;
     public static String commands;
     public static String goodbye;
@@ -47,25 +48,22 @@ public class MenuStrings {
         if (App.getCurrentPlayer() != null && App.isLoggedIn()) {
             Wallet playerWallet = App.getCurrentPlayer().getWallet();
             dollars = playerWallet.getDollars();
-
-            Map<Chip, Integer> playerChips = playerWallet.getChips();
-            for (Map.Entry<Chip, Integer> entry : playerChips.entrySet()) {
-                int dollVal = entry.getKey().getDollarVal();
-                int chipAmt = entry.getValue();
-                if (dollVal == 100) {
-                    blackChips += chipAmt;
-                } else if (dollVal == 25) {
-                    greenChips += chipAmt;
-                } else if (dollVal == 5) {
-                    blueChips += chipAmt;
-                } else {
-                    whiteChips += chipAmt;
+            blackChips = 0;
+            blueChips = 0;
+            whiteChips = 0;
+            greenChips = 0;
+            for (Map.Entry<Chip, Integer> entry : playerWallet.getChips().entrySet()) {
+                Chip.ChipValue type = entry.getKey().getVal();
+                switch (type) {
+                    case BLACK: blackChips += entry.getValue(); break;
+                    case BLUE: blueChips += entry.getValue(); break;
+                    case GREEN: greenChips += entry.getValue(); break;
+                    case WHITE: whiteChips += entry.getValue(); break;
                 }
             }
             Database.processStats(App.getCurrentPlayer());
             playerStats = App.getCurrentPlayer().getStats();
         }
-
         leaderboardPlayers = "";
         ArrayList<Player> sortedList = Database.getAllPlayers();
         Collections.sort(sortedList);
@@ -90,7 +88,6 @@ public class MenuStrings {
 
     public static void loadStrings() {
         updateValues();
-
         String loopyText =
                 "        ██╗     ███████╗████████╗███████╗          \n" +
                 "        ██║     ██╔════╝╚══██╔══╝██╔════╝          \n" +
@@ -111,14 +108,7 @@ public class MenuStrings {
                 "    ███████╗╚██████╔╝╚██████╔╝██║        ██║   \n" +
                 "    ╚══════╝ ╚═════╝  ╚═════╝ ╚═╝        ╚═╝  \n";
 
-        asciiCards = "         | _____\n" +
-                "         | /.\\ ||A ^  | _____\n" +
-                "         |(_._)|| / \\ ||A _  | _____\n" +
-                "         |  |  || \\ / || ( ) ||A_ _ |\n" +
-                "         |____V||  .  ||(_'_)||( v )|\n" +
-                "                |____V||  |  || \\ / |\n" +
-                "                       |____V||  .  |\n" +
-                "                              |____V|\n";
+        asciiCards = "";
 
         asciiDice = "              _______.\n" +
                 "   ______    | .   . |\\\n" +
@@ -129,7 +119,17 @@ public class MenuStrings {
                 " \\ . . \\  /    \\____'__\\|\n" +
                 "  \\_____\\/\n";
 
-        login = loopyText +
+        onceLogin = loopyText +
+                "**************************************************\n" +
+                "***                  ZipCasino                 ***\n" +
+                "***                                            ***\n" +
+                "***                Keep it Loopy               ***\n" +
+                "***                                            ***\n" +
+                "***        Enter [USERNAME] [PASSWORD]         ***\n" +
+                "***               or 'Register'                ***\n" +
+                "**************************************************\n";
+
+        login =
                 "**************************************************\n" +
                 "***                  ZipCasino                 ***\n" +
                 "***                                            ***\n" +
@@ -217,15 +217,51 @@ public class MenuStrings {
                 "********************************************************************************************************************************\n" +
                 "*** Enter a command - By default will purchase the maximum amount of chips, unless an additional amount argument is provided ***\n" +
                 "********************************************************************************************************************************\n";
+        individualStats = "" +
+                "*************************************************************************\n" +
+                "***                      ZipCasino - Stats Menu                       ***\n" +
+                "*************************************************************************\n" +
+                "***    "+ playerStats.getBlackJackWins() +" |  Black Jack Wins                                           ***\n" +
+                "***    "+ playerStats.getGoFishWins() +" |  Go Fish Wins                                              ***\n" +
+                "***    "+ playerStats.getLoopyWins() +" |  Loopy Dice Wins                                           ***\n" +
+                "***    "+ playerStats.getCrapsWins() +" |  Craps Wins                                                ***\n" +
+                "***    "+ playerStats.getOverallWins() +" |  Overall Wins                                              ***\n" +
+                "***    "+ playerStats.getOverallLosses() +" |  Overall Losses                                            ***\n" +
+                "***    "+ playerStats.getGamblingWins() +" |  Gambling Wins                                             ***\n" +
+                "***    "+ playerStats.getTotalLifetimeChipWinnings() +" |  Total Lifetime Chip Winnings                              ***\n" +
+                "***    "+ playerStats.getTotalCashSpent() +" |  Total Cash Spent                                          ***\n" +
+                "***-------------------------------------------------------------------***\n" +
+                "***    0 |  Return to main  menu                                      ***\n" +
+                "***    1 |  Leaderboard                                               ***\n" +
+                "*************************************************************************\n" +
+                "***                          Enter a command                          ***\n" +
+                "*************************************************************************\n" ;
+
+        String toCheck = "*********************************************************************";
+        String front = "***    ";
+        String black = "" + blackChips;
+        String green = ""+ greenChips;
+        String blue = ""+ blueChips;
+        String white = ""+ whiteChips;
+
+        String formattedBlack = front + String.format("%12s", black) + " |  Black";
+        String formattedGreen = front + String.format("%12s", green) + " |  Green";
+        String formattedBlue = front + String.format("%12s", blue) + " |  Blue";
+        String formattedWhite = front + String.format("%12s", white) + " |  White";
+
+        while (formattedBlack.length() < toCheck.length()) { formattedBlack += " "; } formattedBlack += " ***\n";
+        while (formattedGreen.length() < toCheck.length()) { formattedGreen += " "; } formattedGreen += " ***\n";
+        while (formattedBlue.length() < toCheck.length()) { formattedBlue += " "; } formattedBlue += " ***\n";
+        while (formattedWhite.length() < toCheck.length()) { formattedWhite += " "; }  formattedWhite += " ***\n";
 
         viewChipsMenu = "" +
                 "*************************************************************************\n" +
                 "***                       ZipCasino - View Chips                      ***\n" +
                 "*************************************************************************\n" +
-                "***    "+ blackChips + " |  Black                                                     ***\n" +
-                "***    "+ greenChips + " |  Green                                                     ***\n" +
-                "***    "+ blueChips + " |  Blue                                                      ***\n" +
-                "***    "+ whiteChips + " |  White                                                     ***\n" +
+                formattedBlack +
+                formattedGreen +
+                formattedBlue +
+                formattedWhite +
                 "***-------------------------------------------------------------------***\n" +
                 "***    0 |  Return to currency menu                                   ***\n" +
                 "***    1 |  Return to main menu                                       ***\n" +
@@ -252,26 +288,6 @@ public class MenuStrings {
                 "***-------------------------------------------------------------------***\n" +
                 "***    0 |  Return to the main  menu                                  ***\n" +
                 "***    2 |  Individual stats                                          ***\n" +
-                "*************************************************************************\n" +
-                "***                          Enter a command                          ***\n" +
-                "*************************************************************************\n" ;
-
-        individualStats = "" +
-                "*************************************************************************\n" +
-                "***                      ZipCasino - Stats Menu                       ***\n" +
-                "*************************************************************************\n" +
-                "***    "+ playerStats.getBlackJackWins() +" |  Black Jack Wins                                           ***\n" +
-                "***    "+ playerStats.getGoFishWins() +" |  Go Fish Wins                                              ***\n" +
-                "***    "+ playerStats.getLoopyWins() +" |  Loopy Dice Wins                                           ***\n" +
-                "***    "+ playerStats.getCrapsWins() +" |  Craps Wins                                                ***\n" +
-                "***    "+ playerStats.getOverallWins() +" |  Overall Wins                                              ***\n" +
-                "***    "+ playerStats.getOverallLosses() +" |  Overall Losses                                            ***\n" +
-                "***    "+ playerStats.getGamblingWins() +" |  Gambling Wins                                             ***\n" +
-                "***    "+ playerStats.getTotalLifetimeChipWinnings() +" |  Total Lifetime Chip Winnings                              ***\n" +
-                "***    "+ playerStats.getTotalCashSpent() +" |  Total Cash Spent                                          ***\n" +
-                "***-------------------------------------------------------------------***\n" +
-                "***    0 |  Return to main  menu                                      ***\n" +
-                "***    1 |  Leaderboard                                               ***\n" +
                 "*************************************************************************\n" +
                 "***                          Enter a command                          ***\n" +
                 "*************************************************************************\n" ;
@@ -378,6 +394,8 @@ public class MenuStrings {
                 return individualStats;
             case GOODBYE:
                 return goodbye;
+            case WELCOME:
+                return onceLogin;
             default:
                 return "";
         }
@@ -435,12 +453,20 @@ public class MenuStrings {
         names.add("Ashy Larry");
         names.add("Rick James");
         names.add("Ric Flair");
-        names.add("Quavo");
         names.add("Post Malone");
         names.add("Danny Carey");
         names.add("Neil Peart");
         names.add("Jedi");
         names.add("Spock");
+        names.add("Beady Eyes McGee");
+        names.add("Yosemite Sam");
+        names.add("Peter Griffin");
+        names.add("Easter Bunny");
+        names.add("Uncle Bob");
+        names.add("Santa Claus");
+        names.add("Kitty Rotten");
+        names.add("Blue Man Group");
+        names.add("Nick Foles");
         return names.get(ThreadLocalRandom.current().nextInt(names.size()));
     }
 
