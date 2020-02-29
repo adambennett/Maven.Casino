@@ -9,10 +9,6 @@ public class LoopyDicePlayer extends DicePlayer  {
         super(name);
     }
 
-    public LoopyDicePlayer(String name, String password, Wallet wallet) {
-        super(name, password, wallet);
-    }
-
     public LoopyDicePlayer(Player player) {
         super(player.getName(), player.getPassword(), player.getWallet());
     }

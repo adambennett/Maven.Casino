@@ -15,6 +15,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class MenuStrings {
 
     public static String login;
+    public static String onceLogin;
     public static String standard;
     public static String commands;
     public static String goodbye;
@@ -122,7 +123,17 @@ public class MenuStrings {
                 " \\ . . \\  /    \\____'__\\|\n" +
                 "  \\_____\\/\n";
 
-        login = loopyText +
+        onceLogin = loopyText +
+                "**************************************************\n" +
+                "***                  ZipCasino                 ***\n" +
+                "***                                            ***\n" +
+                "***                Keep it Loopy               ***\n" +
+                "***                                            ***\n" +
+                "***        Enter [USERNAME] [PASSWORD]         ***\n" +
+                "***               or 'Register'                ***\n" +
+                "**************************************************\n";
+
+        login =
                 "**************************************************\n" +
                 "***                  ZipCasino                 ***\n" +
                 "***                                            ***\n" +
@@ -371,6 +382,8 @@ public class MenuStrings {
                 return individualStats;
             case GOODBYE:
                 return goodbye;
+            case WELCOME:
+                return onceLogin;
             default:
                 return "";
         }

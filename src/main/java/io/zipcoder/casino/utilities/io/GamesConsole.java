@@ -26,33 +26,27 @@ public class GamesConsole extends AbstractConsole {
 
     @Override
     public void processCommand(Command cmd, ArrayList<String> args) {
-        switch (cmd) {
-            case BLACKJACK:
-                BlackJack blackJackGame = new BlackJack();
-                blackJackGame.runGame();
-                printPrompt(PromptMessage.GAMES_MENU, true);
-                return;
-            case GOFISH:
-                GoFish goFishGame = new GoFish();
-                goFishGame.runGame();
-                printPrompt(PromptMessage.GAMES_MENU, true);
-                return;
-            case LOOPY_DICE:
-                LoopyDice loopyDiceGame = new LoopyDice(3);
-                loopyDiceGame.runGame();
-                printPrompt(PromptMessage.GAMES_MENU, true);
-                return;
-            case CRAPS:
-                Craps crapsGame = new Craps();
-                crapsGame.runGame();
-                printPrompt(PromptMessage.GAMES_MENU, true);
-                return;
-            default:
-                MainConsole console = new MainConsole();
-                console.printPrompt(PromptMessage.STANDARD, true);
-                return;
+        if (App.getCasino().isGame(cmd)) {
+            App.getCasino().startGame(cmd);
+        } else {
+            switch (cmd) {
+                case MAIN_MENU:
+                    MainConsole main = new MainConsole();
+                    main.printPrompt(PromptMessage.STANDARD, true);
+                    return;
+                case HELP:
+                    printHelpCommand(this);
+                    if (App.isLoggedIn()) {
+                        printPrompt(PromptMessage.GAMES_MENU, true);
+                    } else {
+                        printPrompt(PromptMessage.LOGIN, true);
+                    }
+                    return;
+                default:
+                    printPrompt(PromptMessage.GAMES_MENU, true);
+                    return;
+            }
         }
-
     }
 }
 

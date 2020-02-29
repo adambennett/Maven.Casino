@@ -13,7 +13,7 @@ import io.zipcoder.casino.utilities.persistence.StatTracker;
 
 import java.io.Console;
 
-public class LoopyDice implements Game, DiceGame {
+public class LoopyDice implements Game<LoopyDicePlayer>, DiceGame {
 
     private int playerScore = 0;
     private int opponentScore = 0;
@@ -31,11 +31,10 @@ public class LoopyDice implements Game, DiceGame {
     }
 
     @Override
-    public void runGame() {
+    public void runGame(LoopyDicePlayer player) {
         ConsoleServices.print(MenuStrings.asciiDice);
         ConsoleServices.print("Let's get Loopy!");
-        App.updatePlayer(this);
-        this.player = (LoopyDicePlayer) App.getCurrentPlayer();
+        this.player = player;
         this.opponent = new LoopyDicePlayer("Looper");
         this.player.addDice(3);
         this.opponent.addDice(3);

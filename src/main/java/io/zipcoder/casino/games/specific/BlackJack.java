@@ -16,7 +16,7 @@ import io.zipcoder.casino.utilities.persistence.StatTracker;
 import javax.smartcardio.Card;
 import java.util.ArrayList;
 
-public class BlackJack implements Game, CardGame {
+public class BlackJack implements Game<BlackJackPlayer>, CardGame {
 
     private ArrayList<Chip> bets = new ArrayList<>();
     private Deck gameDeck;
@@ -47,15 +47,13 @@ public class BlackJack implements Game, CardGame {
     }
 
     @Override
-    public void runGame() {
-        App.updatePlayer(this);
-        this.currentPlayer = (BlackJackPlayer) App.getCurrentPlayer();
+    public void runGame(BlackJackPlayer player) {
+        this.currentPlayer = player;
         this.opponent = new Dealer();
         Boolean playerWon = false;
         Boolean gameOver = false;
 
         // game logic
-        if (!MenuStrings.asciiCards.equals("")) { ConsoleServices.print(MenuStrings.asciiCards); }
         String betInput = ConsoleServices.getStringInput("Please place your bet\n");
         String betAmount = "";
         betAmount = (betInput.toLowerCase());

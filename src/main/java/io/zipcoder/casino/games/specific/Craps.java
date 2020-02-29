@@ -6,6 +6,7 @@ import io.zipcoder.casino.games.Game;
 import io.zipcoder.casino.models.BettingArea;
 import io.zipcoder.casino.models.Chip;
 import io.zipcoder.casino.models.CrapsTable;
+import io.zipcoder.casino.models.Dice;
 import io.zipcoder.casino.players.DicePlayer;
 import io.zipcoder.casino.utilities.MenuStrings;
 import io.zipcoder.casino.utilities.io.AbstractConsole;
@@ -18,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class Craps implements Game, DiceGame {
+public class Craps implements Game<DicePlayer>, DiceGame {
 
     private DicePlayer currentPlayer;
 
@@ -28,7 +29,7 @@ public class Craps implements Game, DiceGame {
 
 
     @Override
-    public void runGame() {
+    public void runGame(DicePlayer player) {
 
         int amount = 200;
 

@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class GoFish implements Game, CardGame {
+public class GoFish implements Game<GoFishPlayer>, CardGame {
 
     private GoFishPlayer currentPlayer;
     private GoFishNPC opponent;
@@ -51,72 +51,60 @@ public class GoFish implements Game, CardGame {
         this.playerScore = handicap;
         this.opponentScore = 0;
         this.gameDrawAmt = drawAmt;
-        this.scoreToWin = 4;
+        this.scoreToWin = 20;
     }
 
-    public void updateScoreAndHands() {
-        Map<Integer, Integer> playerOcc = new HashMap<>();
-        Map<Integer, Integer> oppOcc = new HashMap<>();
-        ArrayList<PlayingCard> toRemovePlay = new ArrayList<>();
-        ArrayList<PlayingCard> toRemoveOpp = new ArrayList<>();
-        for (PlayingCard card : this.currentPlayer.getHand()) {
-            if (playerOcc.containsKey(card.getValueAsInt())) {
-                playerOcc.put(card.getValueAsInt(), playerOcc.get(card.getValueAsInt()) + 1);
+    public Map<Integer, Integer> fillMapWithOccurrences(CardPlayer playerToRemoveFrom) {
+        Map<Integer, Integer> toRet = new HashMap<>();
+        for (PlayingCard card : playerToRemoveFrom.getHand()) {
+            if (toRet.containsKey(card.getValueAsInt())) {
+                toRet.put(card.getValueAsInt(), toRet.get(card.getValueAsInt()) + 1);
             } else {
-                playerOcc.put(card.getValueAsInt(), 1);
+                toRet.put(card.getValueAsInt(), 1);
             }
         }
+        return toRet;
+    }
 
-        for (PlayingCard card : this.opponent.getHand()) {
-            if (oppOcc.containsKey(card.getValueAsInt())) {
-                oppOcc.put(card.getValueAsInt(), oppOcc.get(card.getValueAsInt()) + 1);
-            } else {
-                oppOcc.put(card.getValueAsInt(), 1);
-            }
-        }
-
+    public ArrayList<PlayingCard> fillToRemove(CardPlayer player, Map<Integer, Integer> mapToCheck) {
+        ArrayList<PlayingCard> toRemove = new ArrayList<>();
         for (PlayingCard card : this.currentPlayer.getHand()) {
-            if (playerOcc.containsKey(card.getValueAsInt()) && playerOcc.get(card.getValueAsInt()) > 1) {
-                toRemovePlay.add(card);
+            if (mapToCheck.containsKey(card.getValueAsInt()) && mapToCheck.get(card.getValueAsInt()) > 1) {
+                toRemove.add(card);
             }
         }
+        return toRemove;
+    }
 
-        for (PlayingCard card : this.opponent.getHand()) {
-            if (oppOcc.containsKey(card.getValueAsInt()) && oppOcc.get(card.getValueAsInt()) > 1) {
-                toRemoveOpp.add(card);
-            }
+    public Integer removePairsFromHand(CardPlayer player, ArrayList<PlayingCard> cardsToRemove) {
+
+        int cardsRemoved = 0;
+        for (PlayingCard remove : cardsToRemove) {
+            player.getHand().remove(remove);
+            cardsRemoved++;
         }
+        return cardsRemoved;
+    }
 
-        for (PlayingCard remove : toRemovePlay) {
-            this.currentPlayer.getHand().remove(remove);
-            this.playerScore++;
-        }
 
-        for (PlayingCard remove : toRemoveOpp) {
-            this.opponent.getHand().remove(remove);
-            this.opponentScore++;
-        }
+    public Integer updateHandAndGetScore(CardPlayer player) {
+        Map<Integer, Integer> playOcc = fillMapWithOccurrences(player);
+        ArrayList<PlayingCard> toRemovePlayer = fillToRemove(player, playOcc);
+        return removePairsFromHand(player, toRemovePlayer);
+    }
 
+    public void updateScores() {
+        this.playerScore += updateHandAndGetScore(this.currentPlayer);
+        this.opponentScore += updateHandAndGetScore(this.opponent);
     }
 
     public boolean pollCard(PlayingCard card, CardPlayer playerToPoll) {
         return (playerToPoll.getHand().size() > 0) ? playerToPoll.getHand().contains(card) : false;
     }
 
-    public PlayingCard getCardFromPlayer(PlayingCard card, CardPlayer playerToPullFrom) {
-        for (PlayingCard p : playerToPullFrom.getHand()) {
-            if (p.equals(card)) {
-                playerToPullFrom.getHand().remove(p);
-                return card;
-            }
-        }
-        return null;
-    }
-
     @Override
-    public void runGame() {
-        App.updatePlayer(this);
-        this.currentPlayer = (GoFishPlayer) App.getCurrentPlayer();
+    public void runGame(GoFishPlayer player) {
+        this.currentPlayer = player;
         this.opponent = new GoFishNPC();
         this.currentPlayer.setGameDrawAmt(this.gameDrawAmt);
         this.opponent.setGameDrawAmt(this.gameDrawAmt);
@@ -128,8 +116,7 @@ public class GoFish implements Game, CardGame {
             else { this.opponent.getHand().addAll(this.gameDeck.draw(1)); }
         }
 
-        updateScoreAndHands();
-        if (!MenuStrings.asciiCards.equals("")) { ConsoleServices.print(MenuStrings.asciiCards); }
+        updateScores();
         ConsoleServices.print("Go Fish!");
         ConsoleServices.print(this.opponent.generateWelcomeMessage());
 
@@ -188,7 +175,7 @@ public class GoFish implements Game, CardGame {
                 }
             }
 
-            updateScoreAndHands();
+            updateScores();
             ConsoleServices.print("\nScoring...");
             ConsoleServices.print("Player Score: " + this.playerScore);
             ConsoleServices.print("Opponent Score: " + this.opponentScore);

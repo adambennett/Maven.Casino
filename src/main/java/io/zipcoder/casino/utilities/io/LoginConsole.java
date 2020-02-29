@@ -10,8 +10,6 @@ import java.util.ArrayList;
 
 public class LoginConsole extends AbstractConsole {
 
-    private boolean loggedIn = false;
-
     @Override
     protected void initializeCommands() {
         consoleCommands.put("help", Command.HELP);
@@ -25,7 +23,7 @@ public class LoginConsole extends AbstractConsole {
         switch (cmd) {
             case HELP:
                 printHelpCommand(this);
-                if (loggedIn) {
+                if (App.isLoggedIn()) {
                     printPrompt(PromptMessage.STANDARD, true);
                 } else {
                     printPrompt(PromptMessage.LOGIN, true);
@@ -41,7 +39,7 @@ public class LoginConsole extends AbstractConsole {
                 return;
             case LOGOUT:
                 printPrompt(PromptMessage.GOODBYE, false);
-                if (loggedIn) {
+                if (App.isLoggedIn()) {
                     SaveLoadServices.saveJSON(SaveLoadServices.SAVE_FILE_NAME);
                 }
                 return;
@@ -61,7 +59,6 @@ public class LoginConsole extends AbstractConsole {
         Boolean loggedIn = Database.canLogin(user, getPasswordFromInput(args));
         if (loggedIn) {
            App.logPlayerIn(Database.getPlayer(user));
-           this.loggedIn = true;
         }
         return loggedIn;
     }
@@ -74,7 +71,6 @@ public class LoginConsole extends AbstractConsole {
                 Player newUser = new Player(user, pass, new Wallet());
                 Database.addUser(newUser);
                 App.logPlayerIn(Database.getPlayer(user));
-                loggedIn = true;
                 return true;
             }
         }

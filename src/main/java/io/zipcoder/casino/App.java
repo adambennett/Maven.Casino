@@ -16,10 +16,6 @@ public class App {
     public static void main(String[] args) {
         App application = new App();
         application.initialize();
-
-        // Example print
-        // ConsoleServices.print("My cool message");
-
     }
 
     public void initialize() {
@@ -27,16 +23,7 @@ public class App {
         StatTracker st = new StatTracker();
         SaveLoadServices.loadJSONData(SaveLoadServices.SAVE_FILE_NAME);
         LoginConsole login = new LoginConsole();
-        login.printPrompt(AbstractConsole.PromptMessage.LOGIN, true);
-
-        /* Test games */
-        // Run LoopyDice
-            //LoopyDice game = new LoopyDice();
-            //game.runGame();
-
-        // Run Go Fish
-            //GoFish game = new GoFish();
-            //game.runGame();
+        login.printPrompt(AbstractConsole.PromptMessage.WELCOME, true);
     }
 
 

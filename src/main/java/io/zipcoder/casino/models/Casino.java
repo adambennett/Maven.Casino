@@ -17,44 +17,51 @@ import java.util.Map;
 
 public class Casino {
 
-    private Map<String, Game> games;
+    private Map<AbstractConsole.Command, Game> games;
     private Player currentPlayer;
 
-    public void startGame(int gameNum) {
-        GamesConsole main = new GamesConsole();
-        switch (gameNum) {
-            case 1:
-                main.processCommand(AbstractConsole.Command.BLACKJACK, new ArrayList<>());
-                return;
-            case 2:
-                main.processCommand(AbstractConsole.Command.GOFISH, new ArrayList<>());
-                return;
-            case 3:
-                main.processCommand(AbstractConsole.Command.LOOPY_DICE, new ArrayList<>());
-                return;
-            case 4:
-                main.processCommand(AbstractConsole.Command.CRAPS, new ArrayList<>());
-                return;
-            default:
-                main.printPrompt(AbstractConsole.PromptMessage.STANDARD, true);
-                return;
+    public void startGame(AbstractConsole.Command cmd) {
+        startGame(cmd, new ArrayList<>());
+    }
+
+    public void startGame(AbstractConsole.Command cmd, ArrayList<String> args) {
+        switch (cmd) {
+            case BLACKJACK:
+                BlackJack blackJack = new BlackJack();
+                updateCurrentPlayer(blackJack);
+                blackJack.runGame((BlackJackPlayer) currentPlayer);
+                break;
+            case GOFISH:
+                GoFish gofish = new GoFish();
+                updateCurrentPlayer(gofish);
+                gofish.runGame((GoFishPlayer) currentPlayer);
+                break;
+            case LOOPY_DICE:
+                LoopyDice loop = new LoopyDice();
+                updateCurrentPlayer(loop);
+                loop.runGame((LoopyDicePlayer) currentPlayer);
+                break;
+            case CRAPS:
+                Craps craps = new Craps();
+                updateCurrentPlayer(craps);
+                craps.runGame((DicePlayer) currentPlayer);
+                break;
         }
+        GamesConsole games = new GamesConsole();
+        games.printPrompt(AbstractConsole.PromptMessage.GAMES_MENU, true);
     }
 
 
     public Casino() {
         currentPlayer = new Player("temp");
         games = new HashMap<>();
-        games.put("blackjack", new BlackJack());
-        games.put("go fish", new GoFish());
-        games.put("gofish", new GoFish());
-        games.put("loopy", new LoopyDice());
-        games.put("loop", new LoopyDice());
-        games.put("loopydice", new LoopyDice());
-        games.put("craps", new Craps());
+        games.put(AbstractConsole.Command.BLACKJACK, new BlackJack());
+        games.put(AbstractConsole.Command.GOFISH, new GoFish());
+        games.put(AbstractConsole.Command.LOOPY_DICE, new LoopyDice());
+        games.put(AbstractConsole.Command.CRAPS, new Craps());
     }
 
-    public Map<String, Game> getGames() {
+    public Map<AbstractConsole.Command, Game> getGames() {
         return games;
     }
 
@@ -63,6 +70,10 @@ public class Casino {
     }
 
     public void setCurrentPlayer(Player player) { currentPlayer = player;}
+
+    public Boolean isGame(AbstractConsole.Command gameCmd) {
+        return this.games.containsKey(gameCmd);
+    }
 
     public void updateCurrentPlayer(Game currentGame) {
         if (currentGame instanceof BlackJack) {

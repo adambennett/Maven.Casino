@@ -43,7 +43,8 @@ public abstract class AbstractConsole {
         VIEW_CHIPS_MENU,
         LEADERBOARD,
         IND_STATS,
-        GOODBYE
+        GOODBYE,
+        WELCOME
     }
 
     public AbstractConsole() {
