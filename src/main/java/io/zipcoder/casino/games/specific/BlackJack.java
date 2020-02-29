@@ -75,7 +75,7 @@ public class BlackJack implements Game<BlackJackPlayer>, CardGame {
             {
                 ConsoleServices.print("Cards in hand: " + this.currentPlayer.printHand());
                 ConsoleServices.print("Your hand value is: "+ this.currentPlayer.getValue());
-                ConsoleServices.print("The dealers' hand value is: "+ this.opponent.getHandValue());
+                ConsoleServices.print("The dealers' hand value is: "+ this.opponent.getValue());
                 String input = ConsoleServices.getStringInput("Would you like to Hit or Stay? ");
                 String hitOrStay = "";
                 hitOrStay = input.toLowerCase();
@@ -106,15 +106,15 @@ public class BlackJack implements Game<BlackJackPlayer>, CardGame {
             else {
                 if (this.opponent.isHitting()){
                     this.opponent.getHand().addAll(this.gameDeck.draw(1));
-                    ConsoleServices.print("Dealers' hand value is: "+ this.opponent.getHandValue());
+                    ConsoleServices.print("Dealers' hand value is: "+ this.opponent.getValue());
                 }
                 this.findWinner = true;
             }
 
 
             if (this.findWinner) {
-                ConsoleServices.print("Let's see who won!\nYour hand: "+ this.currentPlayer.getValue()+"\nDealers hand: "+ this.opponent.getHandValue());
-                if(this.currentPlayer.getValue() < 22 && this.currentPlayer.getValue() > this.opponent.getHandValue() || this.opponent.getHandValue() > 21) {
+                ConsoleServices.print("Let's see who won!\nYour hand: "+ this.currentPlayer.getValue()+"\nDealers hand: "+ this.opponent.getValue());
+                if(this.currentPlayer.getValue() < 22 && this.currentPlayer.getValue() > this.opponent.getValue() || this.opponent.getValue() > 21) {
                     playerWon = true;
                     ConsoleServices.print("You've won! "+ bets.get(0).getDollarVal()+ "$");
 

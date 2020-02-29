@@ -1,22 +1,12 @@
 package io.zipcoder.casino.games.specific;
 
-import io.zipcoder.casino.App;
 import io.zipcoder.casino.games.DiceGame;
 import io.zipcoder.casino.games.Game;
-import io.zipcoder.casino.models.BettingArea;
-import io.zipcoder.casino.models.Chip;
-import io.zipcoder.casino.models.CrapsTable;
-import io.zipcoder.casino.models.Dice;
 import io.zipcoder.casino.players.DicePlayer;
 import io.zipcoder.casino.utilities.MenuStrings;
-import io.zipcoder.casino.utilities.io.AbstractConsole;
 import io.zipcoder.casino.utilities.io.ConsoleServices;
-import io.zipcoder.casino.utilities.io.MainConsole;
 import io.zipcoder.casino.utilities.persistence.StatTracker;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Random;
 
 public class Craps implements Game<DicePlayer>, DiceGame {

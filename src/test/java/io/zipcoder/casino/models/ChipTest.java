@@ -9,7 +9,7 @@ public class ChipTest {
     public void dollarValTest(){
 
         int expected = 1;
-        int actual = Chip.getWHITE();
+        int actual = Chip.ChipValue.WHITE.getValue();
 
         Assert.assertEquals(expected, actual);
 
@@ -18,7 +18,7 @@ public class ChipTest {
     @Test
     public void dollarValTest2(){
         int expected = 5;
-        int actual = Chip.getBLUE();
+        int actual = Chip.ChipValue.BLUE.getValue();
 
         Assert.assertEquals(expected, actual);
     }
@@ -26,7 +26,7 @@ public class ChipTest {
     @Test
     public void dollarValTest3() {
         int expected = 25;
-        int actual = Chip.getGREEN();
+        int actual = Chip.ChipValue.GREEN.getValue();
 
         Assert.assertEquals(expected, actual);
     }
@@ -34,7 +34,7 @@ public class ChipTest {
     @Test
     public void dollarValTest4() {
         int expected = 100;
-        int actual = Chip.getBLACK();
+        int actual = Chip.ChipValue.BLACK.getValue();
 
         Assert.assertEquals(expected, actual);
     }

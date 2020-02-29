@@ -5,65 +5,15 @@ import java.util.Map;
 
 public class Chip {
 
-    private int dollarVal;
     private ChipValue val;
-
-
-    // Needed for proper JSON deserialization
-    public Chip(String test) {}
 
     public Chip(ChipValue val) {
         this.val = val;
     }
 
-    public ChipValue getVal() {
-        return val;
-    }
-
     public int getDollarVal() {
-        if(val == ChipValue.WHITE){
-            dollarVal = getWHITE();
-        }
-        if (val == ChipValue.BLUE){
-            dollarVal = getBLUE();
-
-        }
-        if( val == ChipValue.GREEN){
-            dollarVal = getGREEN();
-
-        }
-        if( val == ChipValue.BLACK){
-            dollarVal = getBLACK();
-        }
-        return dollarVal;
+        return this.val.getValue();
     }
-
-
-    public static int getWHITE() {
-        ChipValue whiteChip = ChipValue.WHITE;
-        int whiteChipVal = whiteChip.getValue();
-        return whiteChipVal;
-    }
-
-    public static int getBLUE() {
-        ChipValue blueChip = ChipValue.BLUE;
-        int blueChipVal = blueChip.getValue();
-        return blueChipVal;
-
-    }
-
-    public static int getGREEN() {
-        ChipValue greenChip = ChipValue.GREEN;
-        int greenChipVal = greenChip.getValue();
-        return greenChipVal;
-    }
-
-    public static int getBLACK() {
-        ChipValue blackChip = ChipValue.BLACK;
-        int blackChipVal = blackChip.getValue();
-        return blackChipVal;
-    }
-
 
     public enum ChipValue {
         WHITE(1),
@@ -72,15 +22,9 @@ public class Chip {
         BLACK(100);
 
         private int value;
-        private static Map map = new HashMap<>();
 
         ChipValue(int value){
             this.value = value;
-        }
-        static {
-            for (ChipValue chipValue: ChipValue.values()) {
-                map.put(chipValue.value, chipValue);
-            }
         }
 
         public int getValue() {
@@ -88,16 +32,23 @@ public class Chip {
         }
     }
 
-    public void setDollarVal(int dollarVal) {
-        this.dollarVal = dollarVal;
-    }
-
-    public void setVal(ChipValue val) {
-        this.val = val;
-    }
-
     @Override
     public String toString() {
         return this.val.toString();
     }
+
+    // Needed for proper JSON deserialization
+    public Chip(String test) {}
+
+    // Needed for proper JSON deserialization
+    public ChipValue getVal() {
+        return val;
+    }
+
+    // Needed for proper JSON deserialization
+    public void setVal(ChipValue val) {
+        this.val = val;
+    }
+
+
 }

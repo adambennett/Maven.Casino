@@ -46,13 +46,13 @@ public class BankTest {
 
         for (Chip myChip : myChips) {
 
-            if (myChip.getDollarVal() == Chip.getBLACK()) {
+            if (myChip.getDollarVal() == Chip.ChipValue.BLACK.getValue()) {
                 black++;
 
-            } else if (myChip.getDollarVal() == Chip.getGREEN()) {
+            } else if (myChip.getDollarVal() == Chip.ChipValue.GREEN.getValue()) {
                 green++;
 
-            } else if (myChip.getDollarVal() == Chip.getBLUE()) {
+            } else if (myChip.getDollarVal() == Chip.ChipValue.BLUE.getValue()) {
                 blue++;
 
             } else {

@@ -8,11 +8,9 @@ public class Bank {
 
     public static int convertChipsToDollars(ArrayList<Chip> chips) {
         int sum = 0;
-
         for (Chip i : chips) {
             sum += i.getDollarVal();
         }
-
         return sum;
     }
 
@@ -50,8 +48,7 @@ public class Bank {
 
     public static ArrayList<Chip> buyBlack(int amt) {
         ArrayList<Chip> blackChips = new ArrayList<>();
-        //amt = notEnoughChips(amt, Chip.getBLACK());
-
+        amt = notEnoughChips(amt, Chip.ChipValue.BLACK.getValue());
         for (int i = 0; i < amt ; i++) {
             blackChips.add(new Chip(Chip.ChipValue.BLACK));
         }
@@ -60,11 +57,8 @@ public class Bank {
 
     }
     public static ArrayList<Chip> buyBlue(int amt) {
-
-
         ArrayList<Chip> blueChips = new ArrayList<>();
-        //amt = notEnoughChips(amt, Chip.getBLUE());
-
+        amt = notEnoughChips(amt, Chip.ChipValue.BLUE.getValue());
         for (int i = 0; i <amt ; i++) {
             blueChips.add(new Chip(Chip.ChipValue.BLUE));
         }
@@ -74,8 +68,7 @@ public class Bank {
     public static ArrayList<Chip> buyGreen(int amt) {
 
         ArrayList<Chip> greenChips = new ArrayList<>();
-        //amt = notEnoughChips(amt, Chip.getGREEN());
-
+        amt = notEnoughChips(amt, Chip.ChipValue.GREEN.getValue());
         for (int i = 0; i <amt ; i++) {
             greenChips.add(new Chip(Chip.ChipValue.GREEN));
         }
@@ -85,7 +78,7 @@ public class Bank {
     public static ArrayList<Chip> buyWhite(int amt) {
 
         ArrayList<Chip> whiteChips = new ArrayList<>();
-        //amt = notEnoughChips(amt, Chip.getWHITE());
+        amt = notEnoughChips(amt, Chip.ChipValue.WHITE.getValue());
 
         for (int i = 0; i <amt ; i++) {
             whiteChips.add(new Chip(Chip.ChipValue.WHITE));

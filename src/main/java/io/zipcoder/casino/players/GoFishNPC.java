@@ -8,20 +8,18 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-public class GoFishNPC extends CardPlayer {
+public class GoFishNPC extends GoFishPlayer {
 
-    private int gameDrawAmt;
     private Random rng;
     private ArrayList<String> welcomeMessages;
 
     public GoFishNPC() {
-        this(MenuStrings.getRandomOpponentName(), 1, new ArrayList<>());
+        this(MenuStrings.getRandomOpponentName(), new ArrayList<>());
     }
 
-    public GoFishNPC(String name, int drawAmt, ArrayList<String> welcomeMessages) {
+    public GoFishNPC(String name, ArrayList<String> welcomeMessages) {
         super(name);
         this.rng = new Random();
-        this.gameDrawAmt = drawAmt;
         this.welcomeMessages = new ArrayList<>();
         this.welcomeMessages.addAll(welcomeMessages);
     }

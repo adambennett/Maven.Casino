@@ -13,9 +13,6 @@ import java.util.ArrayList;
 public class BlackJackPlayer extends CardPlayer {
 
     private Wallet myWallet = new Wallet();
-    private ArrayList<PlayingCard> splitHand;
-    private int handValue;
-    private int splitValue;
 
     // For tests
     public BlackJackPlayer(String name) {
@@ -29,10 +26,6 @@ public class BlackJackPlayer extends CardPlayer {
     public void doubleDown(PlayingCard card, Chip chip) {
         addCardToHand(card);
         myWallet.subChip(chip);
-    }
-
-    public boolean split() {
-        return false;
     }
 
     @JsonIgnore

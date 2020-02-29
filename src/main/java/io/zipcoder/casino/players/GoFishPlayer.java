@@ -9,7 +9,6 @@ import java.util.Collections;
 
 public class GoFishPlayer extends CardPlayer {
 
-
     public GoFishPlayer(String name) {
         super(name);
     }

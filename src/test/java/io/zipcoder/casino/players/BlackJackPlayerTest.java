@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 public class BlackJackPlayerTest {
     private static final Logger LOGGER = Logger.getLogger(BankTest.class.getName());
 
-
     @Test
     public void doubleDownTest() {
         Wallet myWallet = new Wallet();
@@ -24,18 +23,6 @@ public class BlackJackPlayerTest {
         Integer actual = Raheel.getHand().size();
         LOGGER.info(""+ actual);
         Assert.assertEquals(expected,actual);
-
-
-
-    }
-    @Test
-    public void splitTest() {
-        ArrayList<PlayingCard> hand = new ArrayList<>();
-        BlackJackPlayer Raheel = new BlackJackPlayer("Raheel");
-
-        if(hand.indexOf(0) == hand.indexOf(1)){
-            Raheel.split();
-        }
     }
 
 }

@@ -11,7 +11,7 @@ import java.util.Map;
 public class Wallet {
 
     private int dollars;
-    private Map<Chip, Integer> chips = new HashMap<>();
+    private Map<Chip, Integer> chips;
     private Player owner;
 
     public Wallet() {
@@ -33,9 +33,6 @@ public class Wallet {
 
     public boolean addDollar(int amt) {
         dollars += amt;
-        return false;
-    }
-    public boolean addAllChips(ArrayList<Chip> chips1){
         return false;
     }
 

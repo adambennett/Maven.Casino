@@ -91,8 +91,8 @@ public class GoFish implements Game<GoFishPlayer>, CardGame {
         this.opponentScore += updateHandAndGetScore(this.opponent);
     }
 
-    public boolean pollCard(PlayingCard card, CardPlayer playerToPoll) {
-        return (playerToPoll.getHand().size() > 0) ? playerToPoll.getHand().contains(card) : false;
+    public boolean pollCard(PlayingCard card, GoFishPlayer playerToPoll) {
+        return (playerToPoll.hasCard(card));
     }
 
     public void setup(GoFishPlayer player) {

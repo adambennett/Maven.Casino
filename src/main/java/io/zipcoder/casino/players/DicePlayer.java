@@ -19,8 +19,6 @@ public class DicePlayer extends Player {
     }
 
     public int rollDice() {
-        // get number of dice from the array
-        // produce a random number  from the dice in the method
         int sum = 0;
         for (Dice die : dice) {
             sum += die.toss();
