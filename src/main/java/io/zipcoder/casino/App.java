@@ -4,6 +4,7 @@ import io.zipcoder.casino.games.Game;
 import io.zipcoder.casino.models.StatsModel;
 import io.zipcoder.casino.players.Player;
 import io.zipcoder.casino.models.Casino;
+import io.zipcoder.casino.utilities.MenuStrings;
 import io.zipcoder.casino.utilities.io.AbstractConsole;
 import io.zipcoder.casino.utilities.io.LoginConsole;
 import io.zipcoder.casino.utilities.persistence.SaveLoadServices;
@@ -36,11 +37,12 @@ public class App {
     }
 
     public static void logPlayerIn(Player p) {
-        casino.setCurrentPlayer(p);
-        setLoginStatus();
         if (p.getStats() != null) {
             StatTracker.setStats(p.getStats());
+            MenuStrings.hasSetStatsUp = true;
         }
+        casino.setCurrentPlayer(p);
+        setLoginStatus();
     }
 
     public static Player getCurrentPlayer() {
