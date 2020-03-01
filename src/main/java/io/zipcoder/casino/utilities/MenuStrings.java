@@ -44,6 +44,8 @@ public class MenuStrings {
     public static int whiteChips = 0;
     public static StatsModel playerStats;
 
+    public static boolean hasSetStatsUp = false;
+
     public static void updateValues() {
         if (App.getCurrentPlayer() != null && App.isLoggedIn()) {
             Wallet playerWallet = App.getCurrentPlayer().getWallet();
@@ -61,7 +63,9 @@ public class MenuStrings {
                     case WHITE: whiteChips += entry.getValue(); break;
                 }
             }
-            Database.processStats(App.getCurrentPlayer());
+            if (hasSetStatsUp) {
+                Database.processStats(App.getCurrentPlayer());
+            }
             playerStats = App.getCurrentPlayer().getStats();
         }
         leaderboardPlayers = "";
@@ -71,7 +75,9 @@ public class MenuStrings {
         int length = lengthCheck.length();
         int rank = 1;
         for (Player p : sortedList) {
-            Database.processStats(p);
+            if (hasSetStatsUp) {
+                Database.processStats(p);
+            }
             String nextString = "*** " + rank + ": " + p.getName() + " -- " + p.getStats().getOverallScore();
             while (nextString.length() < length - 4) {
                 nextString += " ";
