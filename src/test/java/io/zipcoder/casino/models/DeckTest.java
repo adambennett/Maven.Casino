@@ -21,4 +21,18 @@ public class DeckTest {
         // then
         Assert.assertEquals(expected, actual);
     }
+
+    @Test
+    public void generateRandomCards() {
+        Deck deck = new Deck(10);
+        deck.setSeed();
+        Assert.assertTrue(deck.getCards().size() == 10);
+    }
+
+    @Test
+    public void generateRandomCardsBig() {
+        Deck deck = new Deck(120);
+        deck.setSeed();
+        Assert.assertTrue(deck.getCards().size() == 120);
+    }
 }

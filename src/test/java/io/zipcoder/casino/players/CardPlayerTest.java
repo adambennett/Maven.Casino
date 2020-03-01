@@ -83,4 +83,77 @@ public class CardPlayerTest {
 
     }
 
+    @Test
+    public void addCardToHandTest() {
+        CardPlayer adam = new CardPlayer("Adam");
+        adam.addCardToHand(new PlayingCard(5));
+        Assert.assertTrue(adam.getHand().get(0).compareTo(new PlayingCard(5)) == 0);
+    }
+
+    @Test
+    public void addCardToHandTestB() {
+        CardPlayer adam = new CardPlayer("Adam");
+        adam.addCardToHand(new PlayingCard(5));
+        Assert.assertTrue(adam.getHand().get(0).equals(new PlayingCard(5)));
+    }
+
+    @Test
+    public void addCardToHandTestC() {
+        CardPlayer adam = new CardPlayer("Adam");
+        adam.addCardToHand(new PlayingCard(5));
+        Assert.assertTrue(!adam.getHand().get(0).equals(new PlayingCard(10)));
+    }
+
+    @Test
+    public void addCardToHandTestD() {
+        CardPlayer adam = new CardPlayer("Adam");
+        adam.addCardToHand(new PlayingCard(5));
+        Assert.assertTrue(adam.getHand().get(0).compareTo(new PlayingCard(4)) == 1);
+    }
+
+    @Test
+    public void addCardToHandTestE() {
+        CardPlayer adam = new CardPlayer("Adam");
+        adam.addCardToHand(new PlayingCard(5));
+        Assert.assertTrue(adam.getHand().get(0).compareTo(new PlayingCard(6)) == -1);
+    }
+
+    @Test
+    public void addCardToHandTestF() {
+        CardPlayer adam = new CardPlayer("Adam");
+        adam.addCardToHand(new PlayingCard(5));
+        Assert.assertFalse(adam.getHand().get(0).compareTo(new PlayingCard(5)) == -1);
+    }
+
+    @Test
+    public void addCardToHandTestG() {
+        CardPlayer adam = new CardPlayer("Adam");
+        adam.addCardToHand(new PlayingCard(5));
+        Assert.assertFalse(adam.getHand().get(0).compareTo(new PlayingCard(5)) == 1);
+    }
+
+    @Test
+    public void addCardToHandTestH() {
+        CardPlayer adam = new CardPlayer("Adam");
+        adam.addCardToHand(new PlayingCard(5));
+        Object test = new PlayingCard(10);
+        Assert.assertTrue(!adam.getHand().get(0).equals(test));
+    }
+
+    @Test
+    public void addCardToHandTestI() {
+        CardPlayer adam = new CardPlayer("Adam");
+        adam.addCardToHand(new PlayingCard(5));
+        Object test = "Test";
+        Assert.assertFalse(adam.getHand().get(0).equals(test));
+    }
+
+    @Test
+    public void addCardToHandTestJ() {
+       PlayingCard test = new PlayingCard(5);
+       PlayingCard.Rank expected = PlayingCard.Rank.FIVE;
+       PlayingCard.Rank actual = test.getValue();
+       Assert.assertEquals(expected, actual);
+    }
+
 }

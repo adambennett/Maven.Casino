@@ -25,7 +25,7 @@ public class BlackJackPlayer extends CardPlayer {
 
     public void doubleDown(PlayingCard card, Chip chip) {
         addCardToHand(card);
-        myWallet.subChip(chip);
+        myWallet.subChip(chip.getVal().toString(), 1);
     }
 
     @JsonIgnore

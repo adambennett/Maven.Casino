@@ -65,12 +65,7 @@ public class WalletTest{
     @Test
     public void subChipTest(){
         Wallet wallet = new Wallet(100);
-        Chip black = new Chip(Chip.ChipValue.BLACK);
-        wallet.addChip(black);
-        wallet.addChip(black);
-        wallet.addChip(black);
-        wallet.addChip(black);
-        wallet.subChip(black);
+        wallet.subChip("BLACK", 5);
         int totalChips = 0;
         for (Map.Entry<Chip, Integer> i : wallet.getChips().entrySet()) {
             totalChips += i.getValue();
@@ -96,5 +91,12 @@ public class WalletTest{
         Integer actual = adam.getWallet().getNumOfChips(Chip.ChipValue.BLUE);
         Integer expected = 0;
         Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void notEnoughMoneyTest() {
+        Player adam = new Player("Adam");
+        adam.getWallet().addDollar(10);
+        Assert.assertFalse(adam.getWallet().subDollar(50));
     }
 }

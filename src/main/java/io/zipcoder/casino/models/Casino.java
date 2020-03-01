@@ -2,10 +2,7 @@ package io.zipcoder.casino.models;
 
 
 import io.zipcoder.casino.games.Game;
-import io.zipcoder.casino.games.specific.BlackJack;
-import io.zipcoder.casino.games.specific.Craps;
-import io.zipcoder.casino.games.specific.GoFish;
-import io.zipcoder.casino.games.specific.LoopyDice;
+import io.zipcoder.casino.games.specific.*;
 import io.zipcoder.casino.players.*;
 import io.zipcoder.casino.utilities.io.AbstractConsole;
 import io.zipcoder.casino.utilities.io.ConsoleServices;
@@ -26,7 +23,9 @@ public class Casino {
             case BLACKJACK:
                 BlackJack blackJack = new BlackJack();
                 updateCurrentPlayer(blackJack);
-                blackJack.runGame((BlackJackPlayer) currentPlayer);
+                //blackJack.runGame((BlackJackPlayer) currentPlayer);
+                NewBlackjack nbj = new NewBlackjack();
+                nbj.runGame((BlackJackPlayer) currentPlayer);
                 break;
             case GOFISH:
                 runGoFish();

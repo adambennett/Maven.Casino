@@ -46,9 +46,8 @@ public class PlayingCard implements Comparable<PlayingCard> {
     public boolean equals(Object o) {
         if (o instanceof PlayingCard) {
             return this.getValueAsInt() == ((PlayingCard) o).getValueAsInt();
-        } else {
-            return super.equals(o);
         }
+        return super.equals(o);
     }
 
     public enum Suit {
