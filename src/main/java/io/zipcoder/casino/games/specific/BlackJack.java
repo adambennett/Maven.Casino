@@ -132,8 +132,10 @@ public class BlackJack extends Game<BlackJackPlayer, Dealer> implements CardGame
     }
 
     public Integer dealerTurn() {
-        hit(this.getOpponent());
-        ConsoleServices.print("Dealer is hitting...");
+        if (getHandValue(this.getOpponent().getHand()) < 17) {
+            hit(this.getOpponent());
+            ConsoleServices.print("Dealer is hitting...");
+        }
         ConsoleServices.print("\nPlayer: " + this.getCurrentPlayer().printHand() + " (" + getHandValue(this.getCurrentPlayer().getHand()) + ")");
         ConsoleServices.print("Dealer: " + getDealerHand());
         return getHandValue(this.getOpponent().getHand());
@@ -368,5 +370,7 @@ public class BlackJack extends Game<BlackJackPlayer, Dealer> implements CardGame
         return toRet;
     }
 
-
+    public ArrayList<Chip> getChipsBet() {
+        return chipsBet;
+    }
 }
