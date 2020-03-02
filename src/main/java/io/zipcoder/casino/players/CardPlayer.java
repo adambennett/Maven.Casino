@@ -54,4 +54,5 @@ public class CardPlayer extends Player {
         int afterDrawSize = this.getHand().size();
         return afterDrawSize - amt == size;
     }
+
 }

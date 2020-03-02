@@ -5,10 +5,7 @@ import io.zipcoder.casino.games.specific.BlackJack;
 import io.zipcoder.casino.games.specific.Craps;
 import io.zipcoder.casino.games.specific.GoFish;
 import io.zipcoder.casino.games.specific.LoopyDice;
-import io.zipcoder.casino.models.Chip;
 import io.zipcoder.casino.models.StatsModel;
-
-import java.util.ArrayList;
 
 public class StatTracker {
     public static int blackJackWins;
@@ -72,6 +69,13 @@ public class StatTracker {
     public static void updateCashSpent(int spent) {
         totalCashSpent+=spent;
         if (totalCashSpent<0) { totalCashSpent = 0; }
+    }
+
+    public static void updateChipWinnings(int amtOfWinnings) {
+        totalLifetimeChipWinnings += amtOfWinnings;
+        if (totalLifetimeChipWinnings < 0) {
+            totalLifetimeChipWinnings = 0;
+        }
     }
 
 }

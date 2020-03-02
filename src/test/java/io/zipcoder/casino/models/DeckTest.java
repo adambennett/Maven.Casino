@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class DeckTest {
 
@@ -20,5 +21,20 @@ public class DeckTest {
 
         // then
         Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void generateRandomCards() {
+        Deck deck = new Deck(10);
+        deck.setSeed();
+        Assert.assertTrue(deck.getCards().size() == 10);
+    }
+
+    @Test
+    public void generateRandomCardsBig() {
+        Deck deck = new Deck(120);
+        deck.setSeed();
+        Logger.getGlobal().info("" + deck.getCards().size());
+        Assert.assertTrue(deck.getCards().size() == 120);
     }
 }

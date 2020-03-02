@@ -45,6 +45,24 @@ public class Chip {
         return super.equals(obj);
     }
 
+    @Override
+    public Object clone() {
+        return new Chip(this.val);
+    }
+
+    public static ChipValue getEnumFromString(String chipType) {
+        switch (chipType.toUpperCase()) {
+            case "GREEN":
+                return ChipValue.GREEN;
+            case "BLUE":
+                return ChipValue.BLUE;
+            case "BLACK":
+                return ChipValue.BLACK;
+            default:
+                return ChipValue.WHITE;
+        }
+    }
+
     // Needed for proper JSON deserialization
     public Chip(String test) {}
 

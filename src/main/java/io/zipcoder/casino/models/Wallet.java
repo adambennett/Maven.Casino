@@ -31,13 +31,12 @@ public class Wallet {
         this.owner = owner;
     }
 
-    public boolean addDollar(int amt) {
+    public void addDollar(int amt) {
         dollars += amt;
-        return false;
     }
 
-    public void addChip(Chip chip) {
-        addChip(chip, 1);
+    public Integer addChip(Chip chip) {
+        return addChip(chip, 1);
     }
 
     public Integer getNumOfChips(Chip.ChipValue type) {
@@ -49,17 +48,37 @@ public class Wallet {
         return 0;
     }
 
-    public void addChip(Chip chip, int amt) {
+    public Integer getNumOfChips(String chipType) {
+        chipType = chipType.toUpperCase();
+        for (Map.Entry<Chip, Integer> entry : chips.entrySet()) {
+            if (entry.getKey().getVal().toString().equals(chipType)) {
+                return entry.getValue();
+            }
+        }
+        return 0;
+    }
+
+    public Integer getNumberOfAllChips() {
+        Integer sum = 0;
+        sum += getNumOfChips("BLACK");
+        sum += getNumOfChips("GREEN");
+        sum += getNumOfChips("BLUE");
+        sum += getNumOfChips("WHITE");
+        return sum;
+    }
+
+    public Integer addChip(Chip chip, int amt) {
         boolean found = false;
         for (Map.Entry<Chip, Integer> entry : chips.entrySet()) {
             if (entry.getKey().getVal().equals(chip.getVal())) {
                 found = true;
-                chips.put(entry.getKey(), entry.getValue() + amt);
+                int newAmt = entry.getValue() + amt;
+                chips.put(entry.getKey(), newAmt);
+                return newAmt;
             }
         }
-        if (!found) {
-            chips.put(chip, amt);
-        }
+        chips.put(chip, amt);
+        return amt;
     }
 
     public Boolean subDollar(int amt) {
@@ -71,13 +90,16 @@ public class Wallet {
         }
     }
 
-    public boolean subChip(Chip chip) {
+    public boolean subChip(String chipType, int amt) {
+        chipType = chipType.toUpperCase();
         for (Map.Entry<Chip, Integer> entry : chips.entrySet()) {
-            if (entry.getKey().getVal().equals(chip.getVal()) && entry.getValue() > 1) {
-                chips.put(entry.getKey(), entry.getValue() - 1);
+            if (entry.getKey().getVal().toString().equals(chipType)) {
+                if (entry.getValue() > amt) {
+                    chips.put(entry.getKey(), entry.getValue() - amt);
+                } else {
+                    chips.remove(entry.getKey());
+                }
                 return true;
-            } else if (entry.getKey().getVal().equals(chip.getVal())) {
-                chips.remove(entry.getKey());
             }
         }
         return false;
