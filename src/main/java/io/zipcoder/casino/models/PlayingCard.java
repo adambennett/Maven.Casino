@@ -43,6 +43,11 @@ public class PlayingCard implements Comparable<PlayingCard> {
     }
 
     @Override
+    protected Object clone() {
+        return new PlayingCard(this.value, this.suit);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (o instanceof PlayingCard) {
             return this.getValueAsInt() == ((PlayingCard) o).getValueAsInt();

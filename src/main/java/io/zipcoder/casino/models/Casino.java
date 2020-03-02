@@ -7,11 +7,8 @@ import io.zipcoder.casino.players.*;
 import io.zipcoder.casino.utilities.io.AbstractConsole;
 import io.zipcoder.casino.utilities.io.ConsoleServices;
 import io.zipcoder.casino.utilities.io.GamesConsole;
-import io.zipcoder.casino.utilities.io.MainConsole;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Casino {
 
@@ -23,9 +20,7 @@ public class Casino {
             case BLACKJACK:
                 BlackJack blackJack = new BlackJack();
                 updateCurrentPlayer(blackJack);
-                //blackJack.runGame((BlackJackPlayer) currentPlayer);
-                NewBlackjack nbj = new NewBlackjack();
-                nbj.runGame((BlackJackPlayer) currentPlayer);
+                blackJack.runGame((BlackJackPlayer) currentPlayer);
                 break;
             case GOFISH:
                 runGoFish();

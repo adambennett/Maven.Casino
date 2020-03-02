@@ -64,14 +64,15 @@ public class WalletTest{
 
     @Test
     public void subChipTest(){
-        Wallet wallet = new Wallet(100);
+        Wallet wallet = new Wallet();
+        wallet.addChip(new Chip(Chip.ChipValue.BLACK), 10);
         wallet.subChip("BLACK", 5);
         int totalChips = 0;
-        for (Map.Entry<Chip, Integer> i : wallet.getChips().entrySet()) {
-            totalChips += i.getValue();
+        for (Map.Entry<Chip, Integer> chipType : wallet.getChips().entrySet()) {
+            totalChips+= chipType.getValue();
         }
 
-        int expected = 3;
+        int expected = 5;
         int actual = totalChips;
 
         Assert.assertEquals(expected, actual);

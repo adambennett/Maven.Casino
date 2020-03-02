@@ -65,24 +65,42 @@ public class Deck {
         return newCards;
     }
 
+    public ArrayList<PlayingCard> get52CardDeck() {
+        ArrayList<PlayingCard> newDeck = new ArrayList<>();
+        for (int i = 0; i < ranks.size(); i++) {
+            for (int j = 0; j < suits.size(); j++) {
+                PlayingCard card = new PlayingCard(ranks.get(i), suits.get(j));
+                newDeck.add(card);
+            }
+        }
+        return newDeck;
+    }
+
     public ArrayList<PlayingCard> generateDeck() {
         ArrayList<PlayingCard> newDeck = new ArrayList<>();
-        if (this.deckSize >= 52) {
-            for (int i = 0; i < ranks.size(); i++) {
-                for (int j = 0; j < suits.size(); j++) {
-                    PlayingCard card = new PlayingCard(ranks.get(i), suits.get(j));
-                    newDeck.add(card);
-                }
-            }
-            int cardsNeeded = this.deckSize - newDeck.size();
-            if (cardsNeeded > 0) {
-                newDeck.addAll(generateRandomCards(cardsNeeded));
-            }
-        } else {
-            newDeck.addAll(generateRandomCards(this.deckSize));
+        ArrayList<PlayingCard> cardsInDeck = new ArrayList<>();
+        ArrayList<PlayingCard> standardDeck = get52CardDeck();
+        int decksToAdd = this.deckSize;
+        int cutOff = 0;
+        while (decksToAdd % 52 != 0 && decksToAdd > 52) {
+            decksToAdd--;
+            cutOff++;
         }
-        Collections.shuffle(newDeck);
-        return newDeck;
+        decksToAdd = decksToAdd / 52;
+        if (this.deckSize < 52) {
+            cardsInDeck.addAll(generateRandomCards(this.deckSize));
+        } else {
+            for (int i = 0; i < decksToAdd; i++) {
+                newDeck.clear();
+                for (PlayingCard c : standardDeck) {
+                    newDeck.add((PlayingCard) c.clone());
+                }
+                cardsInDeck.addAll(newDeck);
+            }
+            cardsInDeck.addAll(generateRandomCards(cutOff));
+        }
+        Collections.shuffle(cardsInDeck);
+        return cardsInDeck;
     }
 
     public ArrayList<PlayingCard> draw(int amt) {

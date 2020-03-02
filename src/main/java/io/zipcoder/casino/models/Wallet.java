@@ -58,6 +58,15 @@ public class Wallet {
         return 0;
     }
 
+    public Integer getNumberOfAllChips() {
+        Integer sum = 0;
+        sum += getNumOfChips("BLACK");
+        sum += getNumOfChips("GREEN");
+        sum += getNumOfChips("BLUE");
+        sum += getNumOfChips("WHITE");
+        return sum;
+    }
+
     public Integer addChip(Chip chip, int amt) {
         boolean found = false;
         for (Map.Entry<Chip, Integer> entry : chips.entrySet()) {

@@ -1,14 +1,9 @@
 package io.zipcoder.casino.players;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.zipcoder.casino.games.specific.BlackJack;
 import io.zipcoder.casino.models.Chip;
-import io.zipcoder.casino.models.Deck;
 import io.zipcoder.casino.models.PlayingCard;
 import io.zipcoder.casino.models.Wallet;
-
-import javax.smartcardio.Card;
-import java.util.ArrayList;
 
 public class BlackJackPlayer extends CardPlayer {
 
