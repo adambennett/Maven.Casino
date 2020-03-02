@@ -10,10 +10,6 @@ public class Database {
 
     private static Map<String, Player> usersByName;
 
-    public static Map<String, Player> getData() {
-        return usersByName;
-    }
-
     public static boolean isUser(String name) {
         return usersByName.containsKey(name) ? true : false;
     }
@@ -60,6 +56,10 @@ public class Database {
 
     public static boolean canLogin(String name, String pass) {
         return (usersByName.containsKey(name)) ? (usersByName.get(name).getPassword().equals(pass)) : false;
+    }
+
+    public static void clear() {
+        usersByName.clear();
     }
 
     static {

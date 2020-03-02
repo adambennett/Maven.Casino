@@ -129,7 +129,7 @@ public class GoFish extends Game<GoFishPlayer, GoFishNPC> implements CardGame {
         } else { ConsoleServices.print("Please enter a card to fish for by number!"); }
     }
 
-    public void opponentTurn() {
+    public Boolean opponentTurn() {
         refreshOpponentHand();
         PlayingCard askCard = this.getOpponent().generateCardToAsk();
         ConsoleServices.print("\n" + this.getOpponent().getName() + ": Fishing for " + askCard.getValue());
@@ -138,9 +138,11 @@ public class GoFish extends Game<GoFishPlayer, GoFishNPC> implements CardGame {
             ConsoleServices.print("                                 FISHED! You had a " + askCard.getValueAsInt() + "! " + this.getOpponent().getName() + " has now taken it from you.");
             this.getCurrentPlayer().getHand().remove(askCard);
             this.getOpponent().getHand().add(askCard);
+            return true;
         } else {
             ConsoleServices.print("\n                                 Go Fish!");
             this.getOpponent().draw(this.gameDeck, this.gameDrawAmt);
+            return false;
         }
     }
 
@@ -214,6 +216,22 @@ public class GoFish extends Game<GoFishPlayer, GoFishNPC> implements CardGame {
 
     public Deck getGameDeck() {
         return gameDeck;
+    }
+
+    public int getPlayerScore() {
+        return playerScore;
+    }
+
+    public int getGameDrawAmt() {
+        return gameDrawAmt;
+    }
+
+    public int getScoreToWin() {
+        return scoreToWin;
+    }
+
+    public int getStartingHandSize() {
+        return startingHandSize;
     }
 }
 

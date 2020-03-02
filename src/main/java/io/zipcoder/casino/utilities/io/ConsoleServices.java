@@ -1,6 +1,8 @@
 package io.zipcoder.casino.utilities.io;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.util.Util;
+
+
+
 import java.util.Scanner;
 
 
@@ -13,7 +15,7 @@ public final class ConsoleServices {
 
     public static Float getFloatInput(String prompt) {
         Scanner scanner = new Scanner(System.in);
-        Util.println(prompt);
+        System.out.println(prompt);
         String userInput = scanner.nextLine();
         try {
             return Float.parseFloat(userInput);
@@ -24,7 +26,7 @@ public final class ConsoleServices {
 
     public static Double getDoubleInput(String prompt) {
         Scanner scanner = new Scanner(System.in);
-        Util.println(prompt);
+        System.out.println(prompt);
         String userInput = scanner.nextLine();
         try {
             return Double.parseDouble(userInput);
@@ -34,7 +36,7 @@ public final class ConsoleServices {
 
     public static Integer getIntegerInput(String prompt) {
         Scanner scanner = new Scanner(System.in);
-        Util.println(prompt);
+        System.out.println(prompt);
         String userInput = scanner.nextLine();
         try {
             return Integer.parseInt(userInput);
@@ -44,7 +46,7 @@ public final class ConsoleServices {
 
     public static String getStringInput(String prompt) {
         Scanner scanner = new Scanner(System.in);
-        Util.println(prompt);
+        System.out.println(prompt);
         String userInput = scanner.nextLine();
         return userInput;
     }

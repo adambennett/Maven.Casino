@@ -1,11 +1,7 @@
 package io.zipcoder.casino.players;
 
-import io.zipcoder.casino.models.Deck;
 import io.zipcoder.casino.models.PlayingCard;
-import io.zipcoder.casino.models.Wallet;
 
-import javax.smartcardio.Card;
-import java.util.Collections;
 
 public class GoFishPlayer extends CardPlayer {
 

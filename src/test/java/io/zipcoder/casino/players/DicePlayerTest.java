@@ -41,4 +41,12 @@ public class DicePlayerTest {
         Assert.assertEquals(expectedName, actualName);
     }
 
+    @Test
+    public void emptyDice() {
+        DicePlayer player = new DicePlayer("Adam");
+        player.addDice(5);
+        Assert.assertEquals(new Integer(5), player.getNumDice());
+        player.emptyDice();
+        Assert.assertEquals(new Integer(0), player.getNumDice());
+    }
 }
